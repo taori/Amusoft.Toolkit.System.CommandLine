@@ -137,7 +137,7 @@ jobs:
 
   package:
     needs: parameters
-    uses: taori/actions/.github/workflows/nupkg.yml@v5
+    uses: taori/actions/.github/workflows/nupkg.yml@v6
     with:
       solutionPath: src/All.sln
       projectPaths: src/Amusoft.Toolkit.System.CommandLine/Amusoft.Toolkit.System.CommandLine.csproj
