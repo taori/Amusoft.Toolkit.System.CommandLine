@@ -4,7 +4,7 @@ $versionSuffix = "beta"
 $runTest = $false
 $runPack = $true
 
-$dateFormat = [System.DateTime]::Now.ToString("yyyyMMdd.Hmm")
+$dateFormat = [System.DateTime]::Now.ToString("yyyyMMdd.1HHmm")
 $versionSuffix = "$($versionSuffix).$($dateFormat)"
 
 $projects = @(

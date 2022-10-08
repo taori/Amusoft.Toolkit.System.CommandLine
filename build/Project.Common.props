@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<VersionPrefix>0.4.0</VersionPrefix>
 		<VersionSuffix>alpha</VersionSuffix>
-		<Authors>Andreas Müller</Authors>
+		<Authors>https://github.com/taori/Amusoft.Toolkit.System.CommandLine/graphs/contributors</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright © Andreas Müller 2022</Copyright>
 		<RepositoryType>git</RepositoryType>
