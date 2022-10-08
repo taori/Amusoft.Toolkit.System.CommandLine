@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LocalPackageTest.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "sub1 --test \"testmethod asdf\" --number 48695"
+    }
+  }
+}

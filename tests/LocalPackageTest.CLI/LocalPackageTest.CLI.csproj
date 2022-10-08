@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amusoft.Generators.System.CommandLine" Version="1.0.0-beta.20221006.1446" />
+    <PackageReference Include="Amusoft.Toolkit.System.CommandLine" Version="1.0.0-beta.20221008.322" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CommandLineImplementation\" />
+    <Folder Include="Commands\" />
+    <Folder Include="Toolkit\Options\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

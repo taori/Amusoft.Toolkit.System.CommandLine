@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+
+		<IsPackable>false</IsPackable>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="nlog.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="nlog.config">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Amusoft.XUnit.NLog.Extensions" Version="2.4.2-alpha61" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="NLog" Version="4.7.11" />
+		<PackageReference Include="Shouldly" Version="3.0.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" Version="3.0.2">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+			<PrivateAssets>all</PrivateAssets>
+			<!-- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
+		<PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
+		<PackageReference Include="Verify.SourceGenerators" Version="1.5.0" />
+		<PackageReference Include="Verify.Xunit" Version="17.10.2" />
+	</ItemGroup>
+
+</Project>

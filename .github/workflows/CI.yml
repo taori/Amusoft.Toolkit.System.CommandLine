@@ -1,0 +1,155 @@
+name: CI
+
+on: 
+  push:
+    branches: [ main ]
+    paths:
+      - .github/workflows/*
+      - src/**/*
+      - tests/**/*    
+
+  pull_request:
+    branches: [ main ]
+    types: 
+      - opened
+      - reopened
+      - synchronize 
+
+  workflow_dispatch:
+    inputs:          
+      versionPrefix:
+          type: string
+          description: e.g 1.1.1
+          default: ""
+
+      versionSuffix:
+          type: string
+          description: e.g alpha.1
+          default: ""
+
+      package:
+          type: boolean
+          description: run dotnet pack?
+          default: true
+
+      publish:
+          type: boolean
+          description: run dotnet publish?
+          default: false
+
+      publishSymbols:
+          type: boolean
+          description: publish snupkg?
+          default: false
+
+      removePrereleases:
+          type: boolean
+          description: nuget unlist preleases?
+          default: false
+
+      configuration:
+          description: build configuration
+          required: false
+          default: Release
+          type: choice
+          options:
+          - Debug
+          - Release
+
+      verbosity:
+          description: build log verbosity
+          required: false
+          default: minimal
+          type: choice
+          options:
+          - quiet
+          - minimal
+          - normal
+          - detailed
+          - diagnostic 
+                
+jobs:
+
+  parameters:
+    runs-on: ubuntu-latest
+  
+    outputs:      
+      versionSuffix : ${{ steps.parameters.outputs.versionSuffix }}
+      versionPrefix : ${{ steps.parameters.outputs.versionPrefix }}
+      configuration : ${{ steps.parameters.outputs.configuration }}
+      verbosity : ${{ steps.parameters.outputs.verbosity }}
+      publish : ${{ steps.parameters.outputs.publish }}
+      package : ${{ steps.parameters.outputs.package }}
+      publishSymbols : ${{ steps.parameters.outputs.publishSymbols }}
+      removePrereleases : ${{ steps.parameters.outputs.removePrereleases }}
+
+    steps:
+
+    - name: nuget secret verification
+      env:
+        NUGET: ${{ secrets.NUGET }}
+      if: "${{ env.NUGET == '' }}"
+      uses: actions/github-script@v3
+      with:
+        script: |
+            core.setFailed('"nuget" secret is missing')
+
+    - name: Setting up parameters
+      id: parameters
+      shell: pwsh
+      run: |
+        Write-Host "Setting up parameters"
+
+        $suffixMap = @{
+            "push"="alpha.${{github.run_number}}"; 
+            "pull_request"="beta.${{github.run_number}}"; 
+            "workflow_dispatch"="${{github.event.inputs.versionSuffix}}"
+        };
+        $suffix = $suffixMap['${{github.event_name}}']
+        if( $suffixMap['workflow_dispatch'] -ne '' -and '${{github.event_name}}' -eq 'workflow_dispatch'){
+            $suffix = $($suffix.TrimEnd('.') + ".")
+            $suffix = "$($suffix)${{github.run_number}}"
+        }  
+
+        #   key name                workflow value                                  fallback value
+        $values = @(
+            @("versionSuffix",      "$suffix",                                      "$suffix"),
+            @("versionPrefix",      "${{github.event.inputs.versionPrefix}}",       ""),
+            @("configuration",      "${{github.event.inputs.configuration}}",       "Release"),
+            @("verbosity",          "${{github.event.inputs.verbosity}}",           "minimal"),
+            @("publish",            "${{github.event.inputs.publish}}",             "false"),
+            @("package",            "${{github.event.inputs.package}}",             "true"),
+            @("publishSymbols",     "${{github.event.inputs.publishSymbols}}",      "false"),
+            @("removePrereleases",  "${{github.event.inputs.removePrereleases}}",   "false")
+        )
+            
+        $manual = $('${{github.event_name}}' -eq 'workflow_dispatch')
+
+        foreach($pair in $values){
+            $value = $pair[2]
+            if($manual -eq $true){
+                $value = $pair[1]
+            }
+            
+            Write-Host "Setting parameter $($pair[0]) => $value"
+            echo "::set-output name=$($pair[0])::$value"
+        }     
+
+  package:
+    needs: parameters
+    uses: taori/actions/.github/workflows/nupkg.yml@v5
+    with:
+      solutionPath: src/All.sln
+      projectPaths: src/Amusoft.Toolkit.System.CommandLine/Amusoft.Toolkit.System.CommandLine.csproj
+      versionSuffix: ${{ needs.parameters.outputs.versionSuffix }}
+      versionPrefix: ${{ needs.parameters.outputs.versionPrefix }}
+      package: ${{ needs.parameters.outputs.package == 'true' }}
+      publish: ${{ needs.parameters.outputs.publish == 'true' }}
+      publishSymbols: ${{ needs.parameters.outputs.publishSymbols == 'true' }}
+      removePrereleases: ${{ needs.parameters.outputs.removePrereleases == 'true' }}
+      configuration: ${{ needs.parameters.outputs.configuration }}
+      verbosity: ${{ needs.parameters.outputs.verbosity }}
+      dotnetVersion: 6.0.x
+    secrets:
+      nuget: ${{ secrets.NUGET }}
+      
