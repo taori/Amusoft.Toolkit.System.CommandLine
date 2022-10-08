@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Amusoft.Toolkit.System.CommandLine.Generators.CommandHandler;
 
 [Generator]
-internal class CommandHandlerGenerator : ISourceGenerator
+internal class SubclassCommandHandlerGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)
     {
@@ -23,9 +23,9 @@ internal class CommandHandlerGenerator : ISourceGenerator
         {
             var root = syntaxTree.GetRoot(context.CancellationToken);
             foreach (var outerClass in ClassesWhichImplementCommand(root))
-            {
-                var semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
-                if (TryGetCandidate(semanticModel, outerClass, out var innerClass))
+			{
+				var semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
+				if (TryGetCandidate(semanticModel, outerClass, out var innerClass))
                 {
                     AppendGeneratorCode(context, semanticModel, outerClass, innerClass);
                 }
@@ -35,7 +35,18 @@ internal class CommandHandlerGenerator : ISourceGenerator
 
     private static IEnumerable<ClassDeclarationSyntax> ClassesWhichImplementCommand(SyntaxNode root)
     {
-        return root.DescendantNodes(_ => true).OfType<ClassDeclarationSyntax>();
+        return root.DescendantNodes(_ => true).OfType<ClassDeclarationSyntax>()
+            .Where(classSyntax => classSyntax
+                .ChildNodes()
+                .OfType<ClassDeclarationSyntax>()
+                .Where(subClass => ClassHasHandlerAttributeSyntax(subClass))
+                .Any());
+    }
+
+    private static bool ClassHasHandlerAttributeSyntax(ClassDeclarationSyntax subClass)
+    {
+	    return subClass.AttributeLists.Any(attributeListSyntax => 
+		    attributeListSyntax.Attributes.Any(attribute => attribute.Name is IdentifierNameSyntax { Identifier.Text: "GenerateCommandHandler" or "GenerateCommandHandlerAttribute" }));
     }
 
     private void AppendGeneratorCode(GeneratorExecutionContext context, SemanticModel semanticModel, ClassDeclarationSyntax outerClass, ClassDeclarationSyntax innerClass)

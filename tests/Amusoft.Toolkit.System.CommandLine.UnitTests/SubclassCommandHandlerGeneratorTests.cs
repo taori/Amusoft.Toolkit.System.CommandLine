@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 namespace Amusoft.Toolkit.System.CommandLine.UnitTests;
 
 [UsesVerify]
-public class CommandHandlerGeneratorTests : GeneratorTestBase
+public class SubclassCommandHandlerGeneratorTests : GeneratorTestBase
 {
-	public CommandHandlerGeneratorTests(ITestOutputHelper outputHelper, GlobalSetupFixture data) : base(outputHelper, data)
+	public SubclassCommandHandlerGeneratorTests(ITestOutputHelper outputHelper, GlobalSetupFixture data) : base(outputHelper, data)
 	{
 	}
 
@@ -25,7 +25,7 @@ public class CommandHandlerGeneratorTests : GeneratorTestBase
 	{
 		var testContent = GetProjectFileContent(testFile);
 		
-		var results = GetSourceGeneratorResults<CommandHandlerGenerator>(testContent);
+		var results = GetSourceGeneratorResults<SubclassCommandHandlerGenerator>(testContent);
 
 		await Verifier.Verify(results.runResult)
 			.UseParameters(testFile);

@@ -140,7 +140,7 @@ jobs:
     uses: taori/actions/.github/workflows/nupkg.yml@v6
     with:
       solutionPath: src/All.sln
-      projectPaths: src/Amusoft.Toolkit.System.CommandLine/Amusoft.Toolkit.System.CommandLine.csproj
+      projectPaths: src/Amusoft.Toolkit.System.CommandLine/Amusoft.Toolkit.System.CommandLine.csproj;src/Amusoft.Toolkit.System.CommandLine.Logging/Amusoft.Toolkit.System.CommandLine.Logging.csproj
       versionSuffix: ${{ needs.parameters.outputs.versionSuffix }}
       versionPrefix: ${{ needs.parameters.outputs.versionPrefix }}
       package: ${{ needs.parameters.outputs.package == 'true' }}
