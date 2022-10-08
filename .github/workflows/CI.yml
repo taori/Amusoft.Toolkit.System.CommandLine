@@ -25,7 +25,7 @@ on:
       versionSuffix:
           type: string
           description: e.g alpha.1
-          default: ""
+          default: "alpha"
 
       package:
           type: boolean

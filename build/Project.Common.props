@@ -1,6 +1,6 @@
 ﻿<Project>
 	<PropertyGroup>
-		<VersionPrefix>0.4.0</VersionPrefix>
+		<VersionPrefix>2.0.0</VersionPrefix>
 		<VersionSuffix>alpha</VersionSuffix>
 		<Authors>https://github.com/taori/Amusoft.Toolkit.System.CommandLine/graphs/contributors</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -15,8 +15,6 @@
 		<Nullable>Enable</Nullable>
 		<PackageIcon>Resources\packageIcon.png</PackageIcon>
 		<PackageReadmeFile>Resources\README.md</PackageReadmeFile>
-		<IncludeSymbols>True</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(IsPackable)' == 'True'">
