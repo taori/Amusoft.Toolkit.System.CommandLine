@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{934AD6E3-4F76-4042-BAD3-835C37E5ACED}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\CI.yml = ..\.github\workflows\CI.yml
+		..\build\Project.Common.props = ..\build\Project.Common.props
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
