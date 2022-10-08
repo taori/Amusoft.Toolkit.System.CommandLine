@@ -86,9 +86,7 @@ Global
 		{3A2826FD-FA00-41B8-A686-520269967D6B}.Debug|x86.Build.0 = Debug|Any CPU
 		{3A2826FD-FA00-41B8-A686-520269967D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A2826FD-FA00-41B8-A686-520269967D6B}.Release|x64.ActiveCfg = Release|Any CPU
-		{3A2826FD-FA00-41B8-A686-520269967D6B}.Release|x64.Build.0 = Release|Any CPU
 		{3A2826FD-FA00-41B8-A686-520269967D6B}.Release|x86.ActiveCfg = Release|Any CPU
-		{3A2826FD-FA00-41B8-A686-520269967D6B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
