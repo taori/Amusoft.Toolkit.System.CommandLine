@@ -1,16 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
-
 		<LangVersion>10.0</LangVersion>
-		<Nullable>Enable</Nullable>
-		<NoWarn>MSB3243,NU1801</NoWarn>
-		<WarningsAsErrors>CS1591</WarningsAsErrors>
+		<IsPackable>true</IsPackable>
+
+		<Title>Amusoft.Toolkit.System.CommandLine.Logging</Title>
+		<Description>Extended logging functionality</Description>
+		<PackageId>Amusoft.Toolkit.System.CommandLine.Logging</PackageId>
+		<Product>Amusoft.Toolkit.System.CommandLine.Logging</Product>
+		<PackageReleaseNotes>
+			logging library
+		</PackageReleaseNotes>
+		<PackageTags>System.CommandLine, amusoft, logging</PackageTags>
 	</PropertyGroup>
 
+	<Import Project="..\..\build\Project.Common.props"/>
+
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="[3,)" />
 		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
 	</ItemGroup>
 

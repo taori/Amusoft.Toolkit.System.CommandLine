@@ -1,12 +1,15 @@
 ﻿using System;
+using System.CommandLine;
 using System.CommandLine.Binding;
 using System.CommandLine.Builder;
-using Amusoft.Toolkit.System.CommandLine.Logging.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Amusoft.Toolkit.System.CommandLine.Logging.Extensions;
 
+/// <summary>
+/// Extensions for CommandLineBuilder
+/// </summary>
 public static class CommandLineBuilderExtensions
 {
 	/// <summary>
@@ -17,7 +20,7 @@ public static class CommandLineBuilderExtensions
 	/// <param name="logFilterOptionsReader">configures how to obtain an instance of <see cref="IOptionsMonitor{LoggerFilterOptions}"/></param>
 	/// <param name="logNamespace">The namespace for which to apply the logging level to. If empty it will be applied to every logging namespace</param>
 	/// <returns></returns>
-	public static CommandLineBuilder UseRuntimeLogLevel(this CommandLineBuilder source, Func<LogLevelOption> logLevelOption, Func<BindingContext, IOptionsMonitor<LoggerFilterOptions>> logFilterOptionsReader, string? logNamespace = default)
+	public static CommandLineBuilder UseRuntimeLogLevel(this CommandLineBuilder source, Func<Option<LogLevel>> logLevelOption, Func<BindingContext, IOptionsMonitor<LoggerFilterOptions>> logFilterOptionsReader, string? logNamespace = default)
 	{
 		source.AddMiddleware(async (context, next) =>
 		{

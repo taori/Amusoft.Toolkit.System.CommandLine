@@ -1,0 +1,24 @@
+﻿<Project>
+	<PropertyGroup>
+		<VersionPrefix>0.4.0</VersionPrefix>
+		<VersionSuffix>alpha</VersionSuffix>
+		<Authors>Andreas Müller</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>Copyright © Andreas Müller 2022</Copyright>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine.git</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<NoWarn>MSB3243,NU1801</NoWarn>
+		<WarningsAsErrors>CS1591</WarningsAsErrors>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Nullable>Enable</Nullable>
+		<PackageIcon>Resources\packageIcon.png</PackageIcon>
+		<PackageReadmeFile>Resources\README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(IsPackable)' == 'True'">
+		<None Include="..\..\README.md" Pack="True" PackagePath="\Resources" />
+		<None Include="..\packageIcon.png" Pack="True" PackagePath="\Resources" />
+	</ItemGroup>
+</Project>

@@ -1,42 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
-		<VersionPrefix>1.0.0</VersionPrefix>
-		<VersionSuffix>alpha</VersionSuffix>
+		<LangVersion>preview</LangVersion>
 		<IsPackable>true</IsPackable>
 
-		<Copyright>Copyright © Andreas Müller 2022</Copyright>
-		<Description>Amusoft.Toolkit.System.CommandLine</Description>
+		<Title>Amusoft.Toolkit.System.CommandLine</Title>
+		<Description>Generators to remove boilerplate</Description>
 		<PackageId>Amusoft.Toolkit.System.CommandLine</PackageId>
-		<Authors>Andreas Müller</Authors>
 		<Product>Amusoft.Toolkit.System.CommandLine</Product>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine.git</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine</PackageProjectUrl>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>
-			lorem ipsum
+			Generators for working with System.CommandLine
 		</PackageReleaseNotes>
 		<PackageTags>System.CommandLine, amusoft, options, generators</PackageTags>
-
-		<LangVersion>preview</LangVersion>
-		<NoWarn>MSB3243,NU1801</NoWarn>
-		<WarningsAsErrors>CS1591</WarningsAsErrors>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Nullable>Enable</Nullable>
-		<Title>Amusoft.Toolkit.System.CommandLine</Title>
-		<PackageIcon>packageIcon.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<None Include="..\..\README.md" Pack="True" PackagePath="\" />
-		<None Include="packageIcon.png" Pack="True" PackagePath="\" />
+	<Import Project="..\..\build\Project.Common.props" />
 
+	<ItemGroup>
+	  <Compile Remove="bin\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <None Remove="bin\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.UnitTests" />
 		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.IntegrationTests" />
+		<None Remove="bin\Debug\net5.0\\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" />
 
 		<None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
@@ -73,14 +62,6 @@
 	<!-- 		<TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_CommandLine)\lib\netstandard2.0\System.CommandLine.dll" IncludeRuntimeDependency="false" /> -->
 	<!-- 	</ItemGroup> -->
 	<!-- </Target> -->
-
-
-	<ItemGroup><!-- <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" PrivateAssets="all" /> -->
-		<!-- <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" PrivateAssets="all" /> -->
-	
-	  <None Remove="bin\Debug\net5.0\\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" />
-	</ItemGroup>
-
 
 	<ItemGroup>
 		<Folder Include="Attributes\" />
