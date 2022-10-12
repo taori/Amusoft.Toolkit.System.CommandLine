@@ -65,7 +65,7 @@ internal sealed class NoNamespaceConsoleFormatter : ConsoleFormatter, IDisposabl
         CreateDefaultLogMessage(textWriter, logEntry, message, scopeProvider);
     }
 
-    private void CreateDefaultLogMessage<TState>(TextWriter textWriter, in LogEntry<TState> logEntry, string message, IExternalScopeProvider scopeProvider)
+    internal void CreateDefaultLogMessage<TState>(TextWriter textWriter, in LogEntry<TState> logEntry, string message, IExternalScopeProvider scopeProvider)
     {
         bool singleLine = FormatterOptions.SingleLine;
         int eventId = logEntry.EventId.Id;
@@ -78,7 +78,7 @@ internal sealed class NoNamespaceConsoleFormatter : ConsoleFormatter, IDisposabl
         // category and event id
         textWriter.Write(LoglevelPadding);
 
-        if (FormatterOptions.IncludeScopes || FormatterOptions.IncludeNamespace)
+        if (HasNamespaceLine())
         {
             textWriter.Write(logEntry.Category);
 
@@ -125,6 +125,11 @@ After:
         }
     }
 
+    private bool HasNamespaceLine()
+    {
+	    return FormatterOptions.IncludeScopes || FormatterOptions.IncludeNamespace;
+    }
+
     private void WriteMessage(TextWriter textWriter, string message, bool singleLine)
     {
         if (!string.IsNullOrEmpty(message))
@@ -136,7 +141,9 @@ After:
             }
             else
             {
-                textWriter.Write(_messagePadding);
+	            if (HasNamespaceLine())
+		            textWriter.Write(_messagePadding);
+
                 WriteReplacing(textWriter, Environment.NewLine, _newLineWithMessagePadding, message);
                 textWriter.Write(Environment.NewLine);
             }
