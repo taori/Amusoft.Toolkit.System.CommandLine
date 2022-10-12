@@ -4,7 +4,7 @@
 [![.GitHub](https://github.com/taori/Amusoft.Toolkit.System.CommandLine/actions/workflows/CI.yml/badge.svg)](https://github.com/taori/Amusoft.Toolkit.System.CommandLine/actions/workflows/CI.yml)
 [![GitHub issues](https://img.shields.io/github/issues/taori/Amusoft.Toolkit.System.CommandLine)](https://github.com/taori/Amusoft.Toolkit.System.CommandLine/issues)
 
-##
+## Nuget packages
 
 |   | release  | prerelease  |
 |---|---|---|
