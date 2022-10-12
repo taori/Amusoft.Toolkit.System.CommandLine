@@ -6,8 +6,8 @@
 
 ## Nuget packages
 
-|   | release  | prerelease  |
-|---|---|---|
+| package  | release  | prerelease  |
+|:--|:--|:--|
 | Amusoft.Toolkit.System.CommandLine  | [![NuGet version (Amusoft.Toolkit.System.CommandLine)](https://img.shields.io/nuget/v/Amusoft.Toolkit.System.CommandLine.svg)](https://www.nuget.org/packages/Amusoft.Toolkit.System.CommandLine/)  | [![NuGet version (Amusoft.Toolkit.System.CommandLine)](https://img.shields.io/nuget/vpre/Amusoft.Toolkit.System.CommandLine.svg)](https://www.nuget.org/packages/Amusoft.Toolkit.System.CommandLine/latest/prerelease)  |
 | Amusoft.Toolkit.System.CommandLine.Logging | [![NuGet version (Amusoft.Toolkit.System.CommandLine.Logging)](https://img.shields.io/nuget/v/Amusoft.Toolkit.System.CommandLine.Logging.svg)](https://www.nuget.org/packages/Amusoft.Toolkit.System.CommandLine.Logging/)  | [![NuGet version (Amusoft.Toolkit.System.CommandLine.Logging)](https://img.shields.io/nuget/vpre/Amusoft.Toolkit.System.CommandLine.Logging.svg)](https://www.nuget.org/packages/Amusoft.Toolkit.System.CommandLine.Logging/latest/prerelease)  |
 
