@@ -20,6 +20,5 @@
 	<ItemGroup Condition="'$(IsPackable)' == 'True'">
 		<None Include="..\..\README.md" Pack="True" PackagePath="\Resources" />
 		<None Include="..\packageIcon.png" Pack="True" PackagePath="\Resources" />
-		<None Include="..\..\docs\Features.Toolkit.md" Pack="True" PackagePath="\docs" />
 	</ItemGroup>
 </Project>
