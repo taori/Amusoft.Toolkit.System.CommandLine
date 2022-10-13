@@ -19,7 +19,7 @@ internal partial class MixedCommand : MixedCommand.ICommandInvoker
 			var p1 = context.ParseResult.GetValueForOption(TestOption);
 			var p2 = context.ParseResult.GetValueForArgument(TestArgument);
 			
-			await ExecuteAsync(context, p1, p2);
+			await ((MixedCommand.ICommandInvoker)this)ExecuteAsync(context, p1, p2);
 		});
 	}
 
