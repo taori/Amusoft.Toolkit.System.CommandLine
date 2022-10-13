@@ -15,6 +15,7 @@
 
 <!--TOC-->
   - [Features of Amusoft.Toolkit.System.CommandLine](docs/Features.Toolkit.md)
+  - [Features of Amusoft.Toolkit.System.CommandLine.Logging](docs/Features.Toolkit.Logging.md)
 <!--/TOC-->
 ## Description
 

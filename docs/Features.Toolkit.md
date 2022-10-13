@@ -1,8 +1,11 @@
+# Features
 ## Code Generation
 
+### GenerateExecuteHandler
 - Generates implementation of this.SetHandler and uses the options/arguments of the current class
 - Utilizes the parameters of the class to generate an execution handler which you have to implement
 - Ensures that your implementation is always in sync with parameters
+- This Generator is optimized to combine constructor injection and service based completion options for parameters
 ```cs
 [GenerateExecuteHandler]
 public partial class ListModGroupCommand : Command
