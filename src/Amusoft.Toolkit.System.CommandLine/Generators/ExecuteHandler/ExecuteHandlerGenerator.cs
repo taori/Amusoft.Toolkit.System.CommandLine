@@ -258,7 +258,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 			sb.Append($$"""			
 				private interface ICommandInvoker
 				{
-					private abstract Task ExecuteAsync(InvocationContext context{{parameterList}});
+					protected abstract Task ExecuteAsync(InvocationContext context{{parameterList}});
 				}
 			""");
 
