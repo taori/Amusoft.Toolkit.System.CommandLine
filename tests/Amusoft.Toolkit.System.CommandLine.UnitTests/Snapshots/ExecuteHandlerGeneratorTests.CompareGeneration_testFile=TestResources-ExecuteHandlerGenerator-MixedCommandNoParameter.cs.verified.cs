@@ -17,7 +17,7 @@ internal partial class MixedCommandNoParameter : MixedCommandNoParameter.IComman
 		this.SetHandler(async (context) =>
 		{
 			
-			await ((MixedCommandNoParameter.ICommandInvoker)this)ExecuteAsync(context);
+			await ((MixedCommandNoParameter.ICommandInvoker)this).ExecuteAsync(context);
 		});
 	}
 

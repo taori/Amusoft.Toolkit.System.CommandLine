@@ -242,7 +242,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 					this.SetHandler(async (context) =>
 					{
 			{{argumentDeclaration}}			
-						await (({{classGeneration.Class.Identifier.Text}}.ICommandInvoker)this)ExecuteAsync(context{{parameterList}});
+						await (({{classGeneration.Class.Identifier.Text}}.ICommandInvoker)this).ExecuteAsync(context{{parameterList}});
 					});
 				}
 			""");
@@ -258,7 +258,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 			sb.Append($$"""			
 				internal interface ICommandInvoker
 				{
-					protected abstract Task ExecuteAsync(InvocationContext context{{parameterList}});
+					public abstract Task ExecuteAsync(InvocationContext context{{parameterList}});
 				}
 			""");
 
