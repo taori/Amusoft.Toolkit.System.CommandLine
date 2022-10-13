@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Amusoft.Toolkit.System.CommandLine.Generators.CommandHandler;
+using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
 using Amusoft.Toolkit.System.CommandLine.UnitTests.Toolkit;
 using VerifyXunit;
 using Xunit;
