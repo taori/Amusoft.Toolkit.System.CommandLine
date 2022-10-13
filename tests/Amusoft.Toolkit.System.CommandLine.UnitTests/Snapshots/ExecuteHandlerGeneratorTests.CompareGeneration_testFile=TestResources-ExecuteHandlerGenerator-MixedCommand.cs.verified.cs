@@ -23,7 +23,7 @@ internal partial class MixedCommand : MixedCommand.ICommandInvoker
 		});
 	}
 
-	private interface ICommandInvoker
+	internal interface ICommandInvoker
 	{
 		protected abstract Task ExecuteAsync(InvocationContext context, string testOption, string testArgument);
 	}

@@ -256,7 +256,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 
 			var parameterList = string.Join("", p.Properties.Select(d => $", {d.UnwrappedOptionType} {d.OptionName.ToCamelCase()}"));
 			sb.Append($$"""			
-				private interface ICommandInvoker
+				internal interface ICommandInvoker
 				{
 					protected abstract Task ExecuteAsync(InvocationContext context{{parameterList}});
 				}
