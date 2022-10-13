@@ -25,6 +25,6 @@ internal partial class MixedCommand : MixedCommand.ICommandInvoker
 
 	private interface ICommandInvoker
 	{
-		private Task ExecuteAsync(InvocationContext context, string testOption, string testArgument);
+		private abstract Task ExecuteAsync(InvocationContext context, string testOption, string testArgument);
 	}
 }
