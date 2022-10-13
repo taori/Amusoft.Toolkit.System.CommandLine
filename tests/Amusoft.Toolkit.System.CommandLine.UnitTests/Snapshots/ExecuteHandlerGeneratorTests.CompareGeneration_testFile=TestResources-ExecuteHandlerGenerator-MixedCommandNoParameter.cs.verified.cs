@@ -23,6 +23,6 @@ internal partial class MixedCommandNoParameter : MixedCommandNoParameter.IComman
 
 	internal interface ICommandInvoker
 	{
-		protected abstract Task ExecuteAsync(InvocationContext context);
+		public abstract Task ExecuteAsync(InvocationContext context);
 	}
 }
