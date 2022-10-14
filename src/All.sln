@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.Comm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{934AD6E3-4F76-4042-BAD3-835C37E5ACED}"
 	ProjectSection(SolutionItems) = preProject
+		..\scripts\build.ps1 = ..\scripts\build.ps1
 		..\.github\workflows\CI.yml = ..\.github\workflows\CI.yml
 		..\docs\Features.Toolkit.Generator.md = ..\docs\Features.Toolkit.Generator.md
 		..\docs\Features.Toolkit.Logging.md = ..\docs\Features.Toolkit.Logging.md
@@ -29,9 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Logging.CliTest", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.CliTest\Amusoft.Toolkit.System.CommandLine.Logging.CliTest.csproj", "{79C82FB0-F4C6-4452-BA8C-08BAB2F7A833}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amusoft.Toolkit.System.CommandLine.Generator", "Amusoft.Toolkit.System.CommandLine.Generator\Amusoft.Toolkit.System.CommandLine.Generator.csproj", "{0DA804C9-393F-41A1-84D9-93B2B8061A0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Generator", "Amusoft.Toolkit.System.CommandLine.Generator\Amusoft.Toolkit.System.CommandLine.Generator.csproj", "{0DA804C9-393F-41A1-84D9-93B2B8061A0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amusoft.Toolkit.System.CommandLine.Generator.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.csproj", "{00996A2D-A540-4E0C-AA53-F9A9AC3C0387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Generator.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.csproj", "{00996A2D-A540-4E0C-AA53-F9A9AC3C0387}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
