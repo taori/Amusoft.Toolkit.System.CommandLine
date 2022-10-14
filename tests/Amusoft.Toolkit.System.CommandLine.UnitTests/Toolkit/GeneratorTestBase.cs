@@ -19,6 +19,25 @@ public class GeneratorTestBase : TestBase
 	{
 	}
 	
+	protected GeneratorTestResult GetIncrementalGeneratorResults<TGenerator>(string inputSource, bool assertions = false) where TGenerator : IIncrementalGenerator, new()
+	{
+		Compilation inputCompilation = CreateCompilation(inputSource); 
+		foreach (var d in inputCompilation.GetDiagnostics())
+		{
+			Log.Info(CSharpDiagnosticFormatter.Instance.Format(d));
+		}
+
+		var generator = new TGenerator();
+		
+		GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+		
+		driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
+		
+		var runResult = driver.GetRunResult();
+
+		return new (outputCompilation, runResult);
+	}
+	
 	protected GeneratorTestResult GetSourceGeneratorResults<TGenerator>(string inputSource, bool assertions = false) where TGenerator : ISourceGenerator, new()
 	{
 		Compilation inputCompilation = CreateCompilation(inputSource); 

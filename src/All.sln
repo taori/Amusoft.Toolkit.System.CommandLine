@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{934AD6E3-4F76-4042-BAD3-835C37E5ACED}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\CI.yml = ..\.github\workflows\CI.yml
+		..\docs\Features.Toolkit.Logging.md = ..\docs\Features.Toolkit.Logging.md
+		..\docs\Features.Toolkit.md = ..\docs\Features.Toolkit.md
 		..\build\Project.Common.props = ..\build\Project.Common.props
 		..\README.md = ..\README.md
 	EndProjectSection
@@ -22,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9A995097
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D72318CF-A49A-48C4-9EC5-461950EBE983}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amusoft.Toolkit.System.CommandLine.Logging.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.UnitTests\Amusoft.Toolkit.System.CommandLine.Logging.UnitTests.csproj", "{373BD539-301B-41DC-8630-BCAD8939ED19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Logging.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.UnitTests\Amusoft.Toolkit.System.CommandLine.Logging.UnitTests.csproj", "{373BD539-301B-41DC-8630-BCAD8939ED19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amusoft.Toolkit.System.CommandLine.Logging.CliTest", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.CliTest\Amusoft.Toolkit.System.CommandLine.Logging.CliTest.csproj", "{79C82FB0-F4C6-4452-BA8C-08BAB2F7A833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Logging.CliTest", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.CliTest\Amusoft.Toolkit.System.CommandLine.Logging.CliTest.csproj", "{79C82FB0-F4C6-4452-BA8C-08BAB2F7A833}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
