@@ -33,8 +33,7 @@ namespace Amusoft.Toolkit.System.CommandLine.Logging.CliTest
 			command.SetHandler(Handle);
 			var commandLineBuilder = new CommandLineBuilder(command);
 			using var sp = serviceCollection.BuildServiceProvider();
-
-			var lfo = sp.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>();
+			
 			commandLineBuilder.AddMiddleware(context =>
 			{
 				context.BindingContext.AddService(typeof(ILogger<>), f => sp.GetRequiredService(typeof(ILogger<>)));
@@ -48,36 +47,36 @@ namespace Amusoft.Toolkit.System.CommandLine.Logging.CliTest
 
 			return await commandLineBuilder
 				.UseDefaults()
-				.UseRuntimeLogLevel(null, null, sp: sp)
+				.UseRuntimeLogLevel(sp)
 				.Build()
 				.InvokeAsync(args);
 		}
 
 		private static void Handle(InvocationContext context)
 		{
-			var logger = context.BindingContext.GetRequiredService<ILogger<Program>>();
-			var options = context.BindingContext.GetRequiredService<IOptions<RuntimeLogLevelOptions>>();
+			// var logger = context.BindingContext.GetRequiredService<ILogger<Program>>();
+			// var options = context.BindingContext.GetRequiredService<IOptions<RuntimeLogLevelOptions>>();
 
 			// logger.LogInformation("Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1");
 			// logger.LogInformation("Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1 Zeile 1");
-			logger.LogInformation(
-				"""
-			Zeile 1
-			Zeile 2
-			Zeile 3
-			""");
+			// logger.LogInformation(
+			// 	"""
+			// Zeile 1
+			// Zeile 2
+			// Zeile 3
+			// """);
 
-			foreach (var logLevel in Enum.GetValues<LogLevel>())
-			{
-				logger.Log(logLevel,
-					"""
-					Zeile 1
-					Zeile 2
-					Zeile 3
-					"""
-				);
-				// logger.Log(logLevel, "typ: {Level}", logLevel);
-			}
+			// foreach (var logLevel in Enum.GetValues<LogLevel>())
+			// {
+			// 	logger.Log(logLevel,
+			// 		"""
+			// 		Zeile 1
+			// 		Zeile 2
+			// 		Zeile 3
+			// 		"""
+			// 	);
+			// 	// logger.Log(logLevel, "typ: {Level}", logLevel);
+			// }
 		}
 	}
 }
