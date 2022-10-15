@@ -2,6 +2,7 @@
 using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
+using Amusoft.Toolkit.System.CommandLine.Extensions;
 using Amusoft.Toolkit.System.CommandLine.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
