@@ -9,6 +9,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Samples\**" />
+	  <Compile Remove="Snapshots\**" />
+	  <EmbeddedResource Remove="Samples\**" />
+	  <EmbeddedResource Remove="Snapshots\**" />
+	  <None Remove="Samples\**" />
+	  <None Remove="Snapshots\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj" />
 	</ItemGroup>
 
@@ -49,8 +58,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Tests\" />
-	  <Folder Include="Samples\" />
-	  <Folder Include="Snapshots\" />
 	  <Folder Include="TestResources\" />
 	</ItemGroup>
 
