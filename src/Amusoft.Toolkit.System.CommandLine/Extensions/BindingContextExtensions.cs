@@ -29,6 +29,6 @@ public static class BindingContextExtensions
 		if (source.GetService<IServiceProvider>() is { } subServiceProvider && subServiceProvider.GetRequiredService<TService>() is {} subService)
 			return subService;
 
-		throw new Exception($"Service {typeof(TService).FullName} not found");
+		throw new InvalidOperationException($"Service {typeof(TService).FullName} not found");
 	}
 }
