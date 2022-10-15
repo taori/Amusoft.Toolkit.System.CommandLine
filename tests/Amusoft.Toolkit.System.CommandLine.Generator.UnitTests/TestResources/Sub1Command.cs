@@ -1,21 +1,18 @@
 ﻿using System.CommandLine;
-using System.CommandLine.Invocation;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
 using Microsoft.Extensions.Logging;
 
-namespace LocalPackageTest.CLI.Commands;
+namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.TestResources;
+
 
 internal partial class Sub1Command : Command
 {
 	public Option<string> TestProperty { get; set; } = new Option<string>("--test", "testparameter");
 
-	public Option<int> Number { get; set; } = new("--number", "Some number");
-
 	public Sub1Command() : base("sub1", "sub1 description")
 	{
 		AddOption(TestProperty);
-		AddOption(Number);
-		BindHandler();
+		// BindHandler();
 	}
 
 	[GenerateCommandHandler]
@@ -28,10 +25,10 @@ internal partial class Sub1Command : Command
 			_logger = logger;
 		}
 
-		public override Task ExecuteAsync(InvocationContext context, string testProperty, int number)
-		{
-			_logger.LogError("Printing parameter {test} {Number}", testProperty, number);
-			return base.ExecuteAsync(context, testProperty, number);
-		}
+		// public override Task ExecuteAsync(InvocationContext context)
+		// {
+		// 	_logger.LogError("test");
+		// 	return base.ExecuteAsync(context);
+		// }
 	}
 }

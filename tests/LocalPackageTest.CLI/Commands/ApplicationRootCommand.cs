@@ -1,4 +1,4 @@
-﻿using LocalPackageTest.CLI.Toolkit.Options;
+﻿using Amusoft.Toolkit.System.CommandLine.Logging.Parameters;
 using Microsoft.Extensions.Logging;
 
 namespace LocalPackageTest.CLI.Commands;

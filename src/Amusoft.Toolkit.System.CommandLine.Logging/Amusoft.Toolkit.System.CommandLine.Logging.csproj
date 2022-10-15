@@ -28,4 +28,8 @@
 	  <Folder Include="Internals\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj" />
+	</ItemGroup>
+
 </Project>

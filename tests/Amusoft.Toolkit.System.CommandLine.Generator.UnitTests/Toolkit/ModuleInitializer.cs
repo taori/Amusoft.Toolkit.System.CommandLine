@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Amusoft.Toolkit.System.CommandLine.Logging.UnitTests;
+namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
 
 internal class ModuleInitializer
 {
@@ -12,5 +12,7 @@ internal class ModuleInitializer
 				directory: Path.Combine(projectDirectory, "Snapshots"),
 				typeName: type.Name,
 				methodName: method.Name));
+
+		VerifySourceGenerators.Enable();
 	}
 }

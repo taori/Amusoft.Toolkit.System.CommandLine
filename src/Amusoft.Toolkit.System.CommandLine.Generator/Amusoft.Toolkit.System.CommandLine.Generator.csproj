@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>preview</LangVersion>
+		<IsPackable>true</IsPackable>
+
+		<Title>Amusoft.Toolkit.System.CommandLine</Title>
+		<Description>Generators to remove boilerplate</Description>
+		<PackageId>Amusoft.Toolkit.System.CommandLine.Generator</PackageId>
+		<Product>Amusoft.Toolkit.System.CommandLine.Generator</Product>
+		<PackageReleaseNotes>
+			Generators for working with System.CommandLine
+		</PackageReleaseNotes>
+		<PackageTags>System.CommandLine, amusoft, options, generators</PackageTags>
+	</PropertyGroup>
+
+	<Import Project="..\..\build\Project.Common.props" />
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.Generator.UnitTests" />
+
+		<None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(OutputPath)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IsExternalInit" Version="1.0.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" PrivateAssets="all" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+			<PrivateAssets>all</PrivateAssets>
+			<!-- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" PrivateAssets="all" />
+		<PackageReference Include="Nullable" Version="1.3.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
+	</ItemGroup>
+
+	<!-- <ItemGroup> -->
+	<!-- <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" PrivateAssets="all" GeneratePathProperty="true" /> -->
+	<!-- </ItemGroup> -->
+	<!-- <PropertyGroup> -->
+	<!-- 	<GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn> -->
+	<!-- </PropertyGroup> -->
+	<!-- <Target Name="GetDependencyTargetPaths"> -->
+	<!-- 	<ItemGroup> -->
+	<!-- 		<TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_CommandLine)\lib\netstandard2.0\System.CommandLine.dll" IncludeRuntimeDependency="false" /> -->
+	<!-- 	</ItemGroup> -->
+	<!-- </Target> -->
+
+	<PropertyGroup>
+		<GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+	</PropertyGroup>
+	
+	<Target Name="GetDependencyTargetPaths" AfterTargets="ResolvePackageDependenciesForBuild">
+		<ItemGroup>
+			<TargetPathWithTargetPlatformMoniker Include="@(ResolvedCompileFileDefinitions)" IncludeRuntimeDependency="false" />
+		</ItemGroup>
+	</Target>
+</Project>
