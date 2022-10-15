@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CommandLine.Binding;
+using System.CommandLine.Help;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Amusoft.Toolkit.System.CommandLine.Extensions;
@@ -16,12 +17,18 @@ public static class BindingContextExtensions
 	/// <param name="fallbackProvider">fallback serviceProvider</param>
 	/// <typeparam name="TService">type of requested service</typeparam>
 	/// <returns>service instance</returns>
-	public static TService GetRequiredService<TService>(this BindingContext source, IServiceProvider? fallbackProvider)
+	public static TService GetRequiredServiceWithFallback<TService>(this BindingContext source, IServiceProvider? fallbackProvider)
 		where TService : notnull
 	{
-		if (fallbackProvider is null)
-			return source.GetRequiredService<TService>();
+		if (source.GetService<TService>() is { } result)
+			return result;
 
-		return source.GetService<TService>() ?? fallbackProvider.GetRequiredService<TService>();
+		if (fallbackProvider is not null && fallbackProvider.GetService<TService>() is { } fallbackService)
+			return fallbackService;
+
+		if (source.GetService<IServiceProvider>() is { } subServiceProvider && subServiceProvider.GetRequiredService<TService>() is {} subService)
+			return subService;
+
+		throw new Exception($"Service {typeof(TService).FullName} not found");
 	}
 }

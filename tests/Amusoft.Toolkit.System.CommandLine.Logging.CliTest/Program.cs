@@ -33,21 +33,11 @@ namespace Amusoft.Toolkit.System.CommandLine.Logging.CliTest
 			command.SetHandler(Handle);
 			var commandLineBuilder = new CommandLineBuilder(command);
 			using var sp = serviceCollection.BuildServiceProvider();
-			
-			commandLineBuilder.AddMiddleware(context =>
-			{
-				context.BindingContext.AddService(typeof(ILogger<>), f => sp.GetRequiredService(typeof(ILogger<>)));
-				context.BindingContext.AddService(typeof(IOptions<>), f => sp.GetRequiredService(typeof(IOptions<>)));
-				context.BindingContext.AddService(typeof(IOptions<>), f => sp.GetRequiredService(typeof(OptionsManager<>)));
-				context.BindingContext.AddService(typeof(IOptionsSnapshot<>),f => sp.GetRequiredService(typeof(IOptionsSnapshot<>)));
-				context.BindingContext.AddService(typeof(IOptionsMonitor<>), f => sp.GetRequiredService(typeof(IOptionsMonitor<>)));
-				context.BindingContext.AddService(typeof(IOptionsFactory<>), f => sp.GetRequiredService(typeof(IOptionsFactory<>)));
-				context.BindingContext.AddService(typeof(IOptionsMonitorCache<>), f => sp.GetRequiredService(typeof(IOptionsMonitorCache<>)));
-			});
 
 			return await commandLineBuilder
 				.UseDefaults()
-				.UseRuntimeLogLevel(sp)
+				.UseServiceProviderFallback(sp)
+				.UseRuntimeLogLevel()
 				.Build()
 				.InvokeAsync(args);
 		}

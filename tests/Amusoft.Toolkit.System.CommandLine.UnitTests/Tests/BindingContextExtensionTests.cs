@@ -24,7 +24,7 @@ public class BindingContextExtensionTests : TestBase
 		{
 			clb.AddMiddleware(context =>
 			{
-				var service = context.BindingContext.GetRequiredService<Func<string>>(null);
+				var service = context.BindingContext.GetRequiredServiceWithFallback<Func<string>>(null);
 			}).Build().Invoke(new string[]{"5"});
 		});
 	}
@@ -39,7 +39,7 @@ public class BindingContextExtensionTests : TestBase
 		{
 			clb.AddMiddleware(context =>
 			{
-				var service = context.BindingContext.GetRequiredService<Func<string>>(null);
+				var service = context.BindingContext.GetRequiredServiceWithFallback<Func<string>>(null);
 				service().ShouldBe("test");
 			}).Build().Invoke(new string[]{"5"});
 		});

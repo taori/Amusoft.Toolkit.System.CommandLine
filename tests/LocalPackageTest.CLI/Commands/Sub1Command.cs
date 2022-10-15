@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
-using Amusoft.Generators.System.CommandLine.Attributes;
+using Amusoft.Toolkit.System.CommandLine.Attributes;
 using Microsoft.Extensions.Logging;
 
 namespace LocalPackageTest.CLI.Commands;

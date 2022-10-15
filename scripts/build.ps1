@@ -1,6 +1,6 @@
 $configuration = "Release"
 $verbosity = "m"
-$versionSuffix = "beta"
+$versionSuffix = "zeta"
 $runTest = $false
 $runPack = $true
 

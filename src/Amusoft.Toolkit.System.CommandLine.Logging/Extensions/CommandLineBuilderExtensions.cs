@@ -24,11 +24,11 @@ public static class CommandLineBuilderExtensions
 	{
 		source.AddMiddleware(async (context, next) =>
 		{
-			var runtimeOptions = context.BindingContext.GetRequiredService<IOptions<RuntimeLogLevelOptions>>(serviceProvider);
+			var runtimeOptions = context.BindingContext.GetRequiredServiceWithFallback<IOptions<RuntimeLogLevelOptions>>(serviceProvider);
 			if (runtimeOptions.Value.LogLevelOption is {} minLevelOption && context.ParseResult.FindResultFor(minLevelOption) is { } optionResult)
 			{
 				var logLevel = optionResult.GetValueOrDefault<LogLevel>();
-				var logFilterOptions = context.BindingContext.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>(serviceProvider);
+				var logFilterOptions = context.BindingContext.GetRequiredServiceWithFallback<IOptionsMonitor<LoggerFilterOptions>>(serviceProvider);
 			
 				if (runtimeOptions.Value.Namespace is { })
 				{
@@ -41,6 +41,22 @@ public static class CommandLineBuilderExtensions
 			}
 
 			await next(context);
+		});
+
+		return source;
+	}
+
+	/// <summary>
+	/// Adds an external serviceProvider to the BindingContext
+	/// </summary>
+	/// <param name="source"></param>
+	/// <param name="serviceProvider">service provider instance to fall back to</param>
+	/// <returns></returns>
+	public static CommandLineBuilder UseServiceProviderFallback(this CommandLineBuilder source, IServiceProvider serviceProvider)
+	{
+		source.AddMiddleware(context =>
+		{
+			context.BindingContext.AddService(typeof(IServiceProvider), _ => serviceProvider);
 		});
 
 		return source;
