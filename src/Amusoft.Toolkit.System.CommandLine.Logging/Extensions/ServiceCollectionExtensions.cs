@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
 
 		source.TryAddSingleton(new RuntimeLogLevelOptions()
 		{
-			Namespace = Assembly.GetEntryAssembly().GetName().Name,
+			Namespace = Assembly.GetEntryAssembly()?.GetName().Name,
 			DefaultLevel = LogLevel.Information,
 		});
 		source.Configure(configure);

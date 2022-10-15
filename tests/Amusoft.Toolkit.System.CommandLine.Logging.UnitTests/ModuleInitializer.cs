@@ -7,7 +7,7 @@ internal class ModuleInitializer
 	[ModuleInitializer]
 	public static void Initialize()
 	{
-		Verifier.DerivePathInfo(
+		VerifierSettings.DerivePathInfo(
 			(sourceFile, projectDirectory, type, method) => new(
 				directory: Path.Combine(projectDirectory, "Snapshots"),
 				typeName: type.Name,

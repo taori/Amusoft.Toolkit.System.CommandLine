@@ -23,7 +23,7 @@ namespace Amusoft.Toolkit.System.CommandLine.Logging.UnitTests
 			line3
 			""";
 
-			var stringWriter = RunCreateDefaultLogMessage(formatter, "some test message");
+			var stringWriter = RunCreateDefaultLogMessage(formatter, input);
 			Verify(stringWriter);
 		}
 

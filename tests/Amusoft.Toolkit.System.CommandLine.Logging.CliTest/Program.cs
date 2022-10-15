@@ -15,7 +15,6 @@ namespace Amusoft.Toolkit.System.CommandLine.Logging.CliTest
 		{
 			var serviceCollection = new ServiceCollection();
 			serviceCollection
-				.AddOptions()
 				.AddRuntimeLogLevel()
 				.AddLogging(logging =>
 			{

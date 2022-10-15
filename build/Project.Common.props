@@ -9,7 +9,7 @@
 		<RepositoryUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine.git</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/taori/Amusoft.Toolkit.System.CommandLine</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<NoWarn>MSB3243,NU1801</NoWarn>
+		<NoWarn>MSB3243;NU1801</NoWarn>
 		<WarningsAsErrors>CS1591</WarningsAsErrors>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Nullable>Enable</Nullable>
