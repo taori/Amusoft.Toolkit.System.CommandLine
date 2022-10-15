@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Amusoft.Toolkit.System.CommandLine" Version="2.0.0-zeta.20221015.10246" />
-    <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Generator" Version="2.0.0-zeta.20221015.10246" />
-    <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Logging" Version="2.0.0-zeta.20221015.10246" />
+    <PackageReference Include="Amusoft.Toolkit.System.CommandLine" Version="2.0.0-zeta.20221015.11239" />
+    <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Generator" Version="2.0.0-zeta.20221015.11239" />
+    <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Logging" Version="2.0.0-zeta.20221015.11239" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
   </ItemGroup>
 
