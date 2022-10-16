@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CommandLine;
+using Amusoft.Toolkit.System.CommandLine.CommandModel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Amusoft.Toolkit.System.CommandLine.Hosting;

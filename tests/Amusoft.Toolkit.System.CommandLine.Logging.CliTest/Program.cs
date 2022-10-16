@@ -1,11 +1,9 @@
 ﻿using System.CommandLine;
-using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.Extensions;
+using Amusoft.Toolkit.System.CommandLine.CommandModel;
 using Amusoft.Toolkit.System.CommandLine.Hosting;
-using Amusoft.Toolkit.System.CommandLine.Logging.CliTest;
 using Amusoft.Toolkit.System.CommandLine.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
