@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Amusoft.Toolkit.System.CommandLine.Hosting;
+namespace Amusoft.Toolkit.System.CommandLine.CommandModel;
 
 /// <summary>
 /// Data factory to hold hierarchic information about the command structure

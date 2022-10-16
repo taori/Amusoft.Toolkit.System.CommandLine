@@ -1,5 +1,5 @@
-﻿using Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
-using Amusoft.Toolkit.System.CommandLine.Generators.CommandHandler;
+﻿using Amusoft.Toolkit.System.CommandLine.Generator.CommandHandler;
+using Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
 using Xunit.Abstractions;
 
 namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Tests;

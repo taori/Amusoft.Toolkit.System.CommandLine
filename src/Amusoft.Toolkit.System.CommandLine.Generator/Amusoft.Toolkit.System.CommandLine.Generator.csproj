@@ -55,6 +55,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Hierarchy\" />
 	</ItemGroup>
 
 	<!-- <ItemGroup> -->

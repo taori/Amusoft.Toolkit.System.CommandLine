@@ -17,7 +17,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
 
 
-[Generator]
+[Generator(LanguageNames.CSharp)]
 internal class ExecuteHandlerGenerator : IIncrementalGenerator
 {
 	private void AppendGeneratorCode(GeneratorExecutionContext context, SemanticModel semanticModel, ClassDeclarationSyntax outerClass)

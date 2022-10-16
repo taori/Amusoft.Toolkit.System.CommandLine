@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Amusoft.Toolkit.System.CommandLine.Hosting;
+namespace Amusoft.Toolkit.System.CommandLine.CommandModel;
 
 /// <summary>
 /// Interface used to build a command hierarchy
