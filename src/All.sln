@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{934A
 		..\scripts\build.ps1 = ..\scripts\build.ps1
 		..\.github\workflows\CI.yml = ..\.github\workflows\CI.yml
 		..\docs\Features.Toolkit.Generator.md = ..\docs\Features.Toolkit.Generator.md
+		..\docs\Features.Toolkit.Hosting.md = ..\docs\Features.Toolkit.Hosting.md
 		..\docs\Features.Toolkit.Logging.md = ..\docs\Features.Toolkit.Logging.md
 		..\docs\Features.Toolkit.md = ..\docs\Features.Toolkit.md
 		..\build\Project.Common.props = ..\build\Project.Common.props
@@ -34,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Generator.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.csproj", "{00996A2D-A540-4E0C-AA53-F9A9AC3C0387}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amusoft.Toolkit.System.CommandLine.Hosting", "Amusoft.Toolkit.System.CommandLine.Hosting\Amusoft.Toolkit.System.CommandLine.Hosting.csproj", "{551EC382-37FA-4551-8E97-01F7D64D2757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Hosting", "Amusoft.Toolkit.System.CommandLine.Hosting\Amusoft.Toolkit.System.CommandLine.Hosting.csproj", "{551EC382-37FA-4551-8E97-01F7D64D2757}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
