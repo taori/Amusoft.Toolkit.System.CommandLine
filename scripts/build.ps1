@@ -10,6 +10,7 @@ $versionSuffix = "$($versionSuffix).$($dateFormat)"
 $projects = @(
     "$PSScriptRoot/../src/Amusoft.Toolkit.System.CommandLine/Amusoft.Toolkit.System.CommandLine.csproj",
     "$PSScriptRoot/../src/Amusoft.Toolkit.System.CommandLine.Generator/Amusoft.Toolkit.System.CommandLine.Generator.csproj",
+    "$PSScriptRoot/../src/Amusoft.Toolkit.System.CommandLine.Hosting/Amusoft.Toolkit.System.CommandLine.Hosting.csproj",
     "$PSScriptRoot/../src/Amusoft.Toolkit.System.CommandLine.Logging/Amusoft.Toolkit.System.CommandLine.Logging.csproj"
 )
 

@@ -4,14 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.Extensions;
 using Amusoft.Toolkit.System.CommandLine.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Amusoft.Toolkit.System.CommandLine.Generators.CommandHandler;
+namespace Amusoft.Toolkit.System.CommandLine.Generator.CommandHandler;
 
-[Generator]
+[Generator(LanguageNames.CSharp)]
 internal class SubclassCommandHandlerGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)

@@ -1,18 +1,36 @@
-﻿using System.CommandLine;
-using System.CommandLine.Invocation;
-using System.CommandLine.Parsing;
-using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.CommandModel;
-using Amusoft.Toolkit.System.CommandLine.Hosting;
-using Amusoft.Toolkit.System.CommandLine.Logging.Extensions;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+# Features 
 
-namespace Amusoft.Toolkit.System.CommandLine.Logging.CliTest;
+## Full sample
+
+This sample uses 
+- Amusoft.Toolkit.System.CommandLine
+- Amusoft.Toolkit.System.CommandLine.Hosting
+- Amusoft.Toolkit.System.CommandLine.Logging
+- Amusoft.Toolkit.System.CommandLine.Generator
+
+```cs
 
 internal class Program
 {
 	static async Task<int> Main(string[] args)
+	{
+#if DEBUG
+		while (true)
+		{
+			Console.WriteLine("Waiting for input");
+			args = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+			if (args.Length == 0)
+				return 0;
+
+			await RunApplicationAsync(args);
+		}
+#else
+			return await RunApplicationAsync(args);
+#endif
+	}
+
+	private static async Task<int> RunApplicationAsync(string[] args)
 	{
 		return await HostedRootCommandBuilder.ForCommand<ApplicationRootCommand>()
 			.UseDefaultConfiguration()
@@ -68,12 +86,6 @@ public partial class TestCommand : Command
 	{
 		_logger = logger;
 	}
-
-	public Task ExecuteAsync(InvocationContext context)
-	{
-		_logger.LogInformation("Command {Name} called", nameof(TestCommand));
-		return Task.CompletedTask;
-	}
 }
 
 [GenerateExecuteHandler]
@@ -85,10 +97,5 @@ public partial class Test2Command : Command
 	{
 		_logger = logger;
 	}
-
-	public Task ExecuteAsync(InvocationContext context)
-	{
-		_logger.LogInformation("Command {Name} called", nameof(Test2Command));
-		return Task.CompletedTask;
-	}
 }
+```
