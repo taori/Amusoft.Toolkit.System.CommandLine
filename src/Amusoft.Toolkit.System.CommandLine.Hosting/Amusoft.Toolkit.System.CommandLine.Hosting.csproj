@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>preview</LangVersion>
+		<IsPackable>true</IsPackable>
+
+		<Title>Amusoft.Toolkit.System.CommandLine.Hosting</Title>
+		<Description>Tooling to develop hosted application</Description>
+		<PackageId>Amusoft.Toolkit.System.CommandLine.Hosting</PackageId>
+		<Product>Amusoft.Toolkit.System.CommandLine.Hosting</Product>
+		<PackageReleaseNotes>
+			HostedRootCommandBuilder
+		</PackageReleaseNotes>
+		<PackageTags>System.CommandLine, amusoft, hosting</PackageTags>
+	</PropertyGroup>
+
+	<Import Project="..\..\build\Project.Common.props" />
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.Hosting.UnitTests" />
+		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.Hosting.IntegrationTests" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" PrivateAssets="all" />
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[5.0,)" />
+	</ItemGroup>
+
+</Project>
