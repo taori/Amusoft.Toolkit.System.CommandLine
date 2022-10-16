@@ -22,7 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Amusoft.Toolkit.System.CommandLine.Generator" Version="2.0.0-alpha.46" />
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="[6.0,)" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="[6.0,)" PrivateAssets="all" />
@@ -46,6 +45,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine.Generator\Amusoft.Toolkit.System.CommandLine.Generator.csproj" />
+	  <ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine.Logging\Amusoft.Toolkit.System.CommandLine.Logging.csproj" />
 	  <ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj" />
 	</ItemGroup>
 
