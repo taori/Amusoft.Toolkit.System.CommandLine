@@ -1,9 +1,11 @@
 ﻿using System.CommandLine;
 using System.Reflection;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
+using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using NLog.Fluent;
+using Shouldly;
 using Xunit.Abstractions;
 
 namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
@@ -18,7 +20,7 @@ public class GeneratorTestBase : TestBase
 	
 	protected GeneratorTestResult GetIncrementalGeneratorResults<TGenerator>(string inputSource, bool assertions = false) where TGenerator : IIncrementalGenerator, new()
 	{
-		Compilation inputCompilation = CreateCompilation(inputSource); 
+		Compilation inputCompilation = CreateCompilation(inputSource);
 		foreach (var d in inputCompilation.GetDiagnostics())
 		{
 			Log.Info(CSharpDiagnosticFormatter.Instance.Format(d));
@@ -31,7 +33,6 @@ public class GeneratorTestBase : TestBase
 		driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
 		
 		var runResult = driver.GetRunResult();
-
 		return new (outputCompilation, runResult);
 	}
 	
@@ -50,7 +51,6 @@ public class GeneratorTestBase : TestBase
 		driver = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out var outputCompilation, out var diagnostics);
 		
 		var runResult = driver.GetRunResult();
-
 		return new (outputCompilation, runResult);
 	}
 
@@ -77,10 +77,11 @@ public class GeneratorTestBase : TestBase
 		yield return MetadataReference.CreateFromFile(typeof(Enumerable).GetTypeInfo().Assembly.Location);
 		yield return MetadataReference.CreateFromFile(typeof(Command).GetTypeInfo().Assembly.Location);
 		yield return MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location);
+		yield return MetadataReference.CreateFromFile(typeof(ExecuteHandlerGenerator).GetTypeInfo().Assembly.Location);
 		yield return MetadataReference.CreateFromFile(typeof(GenerateCommandHandlerAttribute).GetTypeInfo().Assembly.Location);
 	}
 
-	private static Compilation CreateCompilation(string source)
+	protected static Compilation CreateCompilation(string source)
 		=> CSharpCompilation.Create("compilation",
 			new[] { CSharpSyntaxTree.ParseText(source) },
 			GetMetadataReferences().ToArray(),
