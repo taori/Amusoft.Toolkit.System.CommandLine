@@ -1,32 +1,47 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Amusoft.Toolkit.System.CommandLine.Attributes;
+using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Amusoft.Toolkit.System.CommandLine.Generator.Analyzers;
 
+#pragma warning disable CS1591
+
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
-internal class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
+public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 {
-	private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
-		"ATSCG001", 
-		"Method call missing", 
-		"BindHandler must be called in Constructor of {0}",
+	internal static readonly DiagnosticDescriptor ConstructorWithBindHandlerRule = new DiagnosticDescriptor(
+		"ATSCG001",
+		"BindHandler call missing", 
+		"BindHandler must be called in constructor of {0}",
 		"Amusoft.Toolkit.System.CommandLine.Generator Diagnostics", DiagnosticSeverity.Error, isEnabledByDefault: true,
-		description: "Some Description");
+		description: "BindHandler sets up the handler of a command with its arguments. Failing to do so would create a command with a handler that will not be executed.",
+		WellKnownDiagnosticTags.NotConfigurable);
+
+	internal static readonly DiagnosticDescriptor GeneratorAttributeMissingRule = new DiagnosticDescriptor(
+		"ATSCG002",
+		"Generator attribute missing", 
+		"No generator attribute is specified for {0}",
+		"Amusoft.Toolkit.System.CommandLine.Generator Diagnostics", DiagnosticSeverity.Warning, isEnabledByDefault: true,
+		description: $"Neither {typeof(GenerateExecuteHandlerAttribute).Name} nor {typeof(GenerateCommandHandlerAttribute).Name} is specified.");
 
 	public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
 	{
-		get { return ImmutableArray.Create(Rule); }
+		get { return ImmutableArray.Create(
+			ConstructorWithBindHandlerRule, 
+			GeneratorAttributeMissingRule);
+		}
 	}
 
 	public override void Initialize(AnalysisContext context)
 	{
 		context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 		context.RegisterSyntaxNodeAction(AnalyzeClassNode, SyntaxKind.ClassDeclaration);
-		// context.RegisterSymbolAction(AnalyzeNamedType, SymbolKind.NamedType);
 		context.EnableConcurrentExecution();
 	}
 
@@ -34,8 +49,97 @@ internal class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 	{
 		if (context.Node is ClassDeclarationSyntax classDeclaration)
 		{
-			if (classDeclaration is {BaseList.Types : { } types} && types is {Count: > 0})
-				context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), classDeclaration.Identifier.Text));
+			ApplyDiagnostics(classDeclaration, context);
 		}
+	}
+
+	private static void RaiseBindHandlerMissing(SyntaxNodeAnalysisContext context, ClassDeclarationSyntax classDeclaration)
+	{
+		context.ReportDiagnostic(Diagnostic.Create(ConstructorWithBindHandlerRule, context.Node.GetLocation(), classDeclaration.Identifier.Text));
+	}
+
+	private static void RaiseAttributeMissing(SyntaxNodeAnalysisContext context, ClassDeclarationSyntax classDeclaration)
+	{
+		context.ReportDiagnostic(Diagnostic.Create(GeneratorAttributeMissingRule, context.Node.GetLocation(), classDeclaration.Identifier.Text));
+	}
+
+	private static void ApplyDiagnostics(ClassDeclarationSyntax classDeclaration, SyntaxNodeAnalysisContext context)
+	{
+		if (!TryGetCommandType(classDeclaration, out var commandTypeSyntax))
+			return;
+
+		if (!TryGeneratorAttribute(classDeclaration, out var attributeSyntax))
+		{
+			RaiseAttributeMissing(context, classDeclaration);
+			return;
+		}
+
+		if (!TryGetConstructors(classDeclaration, out var constructors))
+		{
+			RaiseBindHandlerMissing(context, classDeclaration);
+			return;
+		}
+	}
+
+	private static bool TryGetConstructors(ClassDeclarationSyntax classDeclaration, [NotNullWhen(true)]out ImmutableArray<(ConstructorDeclarationSyntax constructor, InvocationExpressionSyntax methodCall)>? constructorsSyntax)
+	{
+		var bindCalls = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>()
+			.SelectMany(constructor => 
+				constructor
+					.DescendantNodes()
+					.OfType<InvocationExpressionSyntax>()
+					.Where(IsBindHandlerInvocation)
+					.Select(methodCall => (constructor, methodCall)))
+			.ToImmutableArray();
+		if (bindCalls.Length > 0)
+		{
+			constructorsSyntax = bindCalls;
+			return true;
+		}
+
+		static bool IsBindHandlerInvocation(InvocationExpressionSyntax invocationExpressionSyntax)
+		{
+			return invocationExpressionSyntax is {ArgumentList.Arguments.Count: 0} && invocationExpressionSyntax.Expression is SimpleNameSyntax {Identifier.Text: "BindHandler"};
+		}
+
+		constructorsSyntax = default;
+		return false;
+	}
+
+	private static bool TryGeneratorAttribute(ClassDeclarationSyntax classDeclaration, out IdentifierNameSyntax? identifierNameSyntax)
+	{
+		if (classDeclaration is {AttributeLists: { } attributes} && attributes is {Count: > 0})
+		{
+			foreach (var attributeSyntax in attributes.SelectMany(d => d.Attributes))
+			{
+				if (attributeSyntax.Name is IdentifierNameSyntax {Identifier.Text: 
+					    "GenerateExecuteHandlerAttribute" 
+					    or "GenerateExecuteHandler" 
+					    or "GenerateCommandHandlerAttribute" 
+					    or "GenerateCommandHandler"} attr)
+				{
+					identifierNameSyntax = attr;
+					return true;
+				}
+			}
+		}
+
+		identifierNameSyntax = default;
+		return false;
+	}
+
+	private static bool TryGetCommandType(ClassDeclarationSyntax classDeclaration, out IdentifierNameSyntax? identifierNameSyntax)
+	{
+		if (classDeclaration is {BaseList.Types: { } types} && types is {Count: > 0})
+		{
+			if (types[0].Type is IdentifierNameSyntax {Identifier.Text: "Command" or "RootCommand"} identifier)
+			{
+				identifierNameSyntax = identifier;
+				return true;
+			}
+		}
+
+		identifierNameSyntax = default;
+		return false;
 	}
 }
