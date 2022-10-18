@@ -69,7 +69,7 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 		
-		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("001").WithSpan(6, 1, 14, 2).WithArguments("TestCommand");
+		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("001").WithSpan(7, 22, 7, 33).WithArguments("TestCommand");
 		await RunTestAsync(input, test =>
 		{
 			test.DisabledDiagnostics.Add("ATSCG003");
@@ -95,7 +95,7 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 		
-		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("002").WithSpan(6, 1, 13, 2).WithArguments("TestCommand");
+		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("002").WithSpan(6, 22, 6, 33).WithArguments("TestCommand");
 		await RunTestAsync(input, test =>
 		{
 			test.DisabledDiagnostics.Add("ATSCG003");
