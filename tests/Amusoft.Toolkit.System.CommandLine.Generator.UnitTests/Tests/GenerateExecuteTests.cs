@@ -17,7 +17,7 @@ public class GenerateExecuteTests : GeneratorTestBase
 	public async Task Compare(string testFile)
 	{
 		var testContent = GetProjectFileContent(testFile);
-
+		
 		var results = GetIncrementalGeneratorResults<ExecuteHandlerGenerator>(testContent);
 
 		await Verifier.Verify(results.runResult)
