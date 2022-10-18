@@ -51,6 +51,8 @@ internal class Program
 	}
 }
 
+#pragma warning disable ATSCG001
+
 public class ApplicationRootCommand : RootCommand
 {
 	public ApplicationRootCommand()
