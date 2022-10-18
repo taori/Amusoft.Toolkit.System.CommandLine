@@ -31,12 +31,19 @@ public class ExtendedAnalyzerVerifier<TAnalyzer, TTest, TVerifier>
 		}
 	}
 	
-	public static DiagnosticResult Diagnostic(string diagnosticId)
+	public static DiagnosticResult Diagnostic(string diagnosticId, bool accurate = false)
 	{
 		var analyzer = new TAnalyzer();
 		try
 		{
-			return Diagnostic(analyzer.SupportedDiagnostics.Single(i => i.Id == diagnosticId));
+			if (!accurate)
+			{
+				return Diagnostic(analyzer.SupportedDiagnostics.Single(i => i.Id.EndsWith(diagnosticId)));
+			}
+			else
+			{
+				return Diagnostic(analyzer.SupportedDiagnostics.Single(i => i.Id == diagnosticId));
+			}
 		}
 		catch (InvalidOperationException ex)
 		{

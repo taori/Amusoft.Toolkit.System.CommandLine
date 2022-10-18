@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
+using Amusoft.Toolkit.System.CommandLine.Generator.Utility;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -19,7 +19,7 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 		"ATSCG001",
 		"BindHandler call missing", 
 		"BindHandler must be called in constructor of {0}",
-		"Amusoft.Toolkit.System.CommandLine.Generator Diagnostics", DiagnosticSeverity.Error, isEnabledByDefault: true,
+		"Amusoft.Toolkit.System.CommandLine.Generator Usage", DiagnosticSeverity.Error, isEnabledByDefault: true,
 		description: "BindHandler sets up the handler of a command with its arguments. Failing to do so would create a command with a handler that will not be executed.",
 		WellKnownDiagnosticTags.NotConfigurable);
 
@@ -27,14 +27,24 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 		"ATSCG002",
 		"Generator attribute missing", 
 		"No generator attribute is specified for {0}",
-		"Amusoft.Toolkit.System.CommandLine.Generator Diagnostics", DiagnosticSeverity.Warning, isEnabledByDefault: true,
+		"Amusoft.Toolkit.System.CommandLine.Generator Usage", DiagnosticSeverity.Warning, isEnabledByDefault: true,
 		description: $"Neither {typeof(GenerateExecuteHandlerAttribute).Name} nor {typeof(GenerateCommandHandlerAttribute).Name} is specified.");
+
+	internal static readonly DiagnosticDescriptor RootCommandMustBeInheritedRule = new DiagnosticDescriptor(
+		"ATSCG003",
+		"There is no command that inherits RootCommand",
+		"There is no command that inherits RootCommand",
+		"Amusoft.Toolkit.System.CommandLine.Generator Usage", DiagnosticSeverity.Warning, isEnabledByDefault: true,
+		description: $"In order for the IRootCommandProvider to work there must be a command that implements RootCommand.");
 
 	public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
 	{
-		get { return ImmutableArray.Create(
-			ConstructorWithBindHandlerRule, 
-			GeneratorAttributeMissingRule);
+		get {
+			return	ImmutableArray.Create(
+				RootCommandMustBeInheritedRule, 
+				ConstructorWithBindHandlerRule, 
+				GeneratorAttributeMissingRule
+			);
 		}
 	}
 
@@ -42,7 +52,32 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 	{
 		context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 		context.RegisterSyntaxNodeAction(AnalyzeClassNode, SyntaxKind.ClassDeclaration);
+		context.RegisterCompilationAction(AnalyzeCompilation);
 		context.EnableConcurrentExecution();
+	}
+
+	private void AnalyzeCompilation(CompilationAnalysisContext context)
+	{
+		var commandVisitor = new NamedTypeVisitor(context.CancellationToken);
+		commandVisitor.Visit(context.Compilation.Assembly);
+
+		var allNamedTypes = commandVisitor.ExportedTypes.ToImmutableArray();
+		var commandSymbols = allNamedTypes
+			.Select(d => (
+				command: d, 
+				baseMetaName : d.BaseType?.MetadataName, 
+				isBaseTypeCommand: d.BaseType is { MetadataName: "Command" or "RootCommand" })
+			)
+			.Where(d => d.isBaseTypeCommand)
+			.ToImmutableArray();
+
+		if (commandSymbols.Length > 0)
+		{
+			if (!commandSymbols.Any(d => d.isBaseTypeCommand && d.baseMetaName == "RootCommand"))
+			{
+				context.ReportDiagnostic(Diagnostic.Create(RootCommandMustBeInheritedRule, null));
+			}
+		}
 	}
 
 	private void AnalyzeClassNode(SyntaxNodeAnalysisContext context)
@@ -70,7 +105,8 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 
 		if (!TryGeneratorAttribute(classDeclaration, out var attributeSyntax))
 		{
-			RaiseAttributeMissing(context, classDeclaration);
+			if (!SyntaxIsRootCommand(classDeclaration))
+				RaiseAttributeMissing(context, classDeclaration);
 			return;
 		}
 
@@ -79,6 +115,11 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 			RaiseBindHandlerMissing(context, classDeclaration);
 			return;
 		}
+	}
+
+	private static bool SyntaxIsRootCommand(ClassDeclarationSyntax classDeclaration)
+	{
+		return classDeclaration.BaseList is {Types.Count: > 0} && classDeclaration.BaseList.Types[0].Type is IdentifierNameSyntax {Identifier.Text: "RootCommand"};
 	}
 
 	private static bool TryGetConstructors(ClassDeclarationSyntax classDeclaration, [NotNullWhen(true)]out ImmutableArray<(ConstructorDeclarationSyntax constructor, InvocationExpressionSyntax methodCall)>? constructorsSyntax)
@@ -91,6 +132,7 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 					.Where(IsBindHandlerInvocation)
 					.Select(methodCall => (constructor, methodCall)))
 			.ToImmutableArray();
+
 		if (bindCalls.Length > 0)
 		{
 			constructorsSyntax = bindCalls;
