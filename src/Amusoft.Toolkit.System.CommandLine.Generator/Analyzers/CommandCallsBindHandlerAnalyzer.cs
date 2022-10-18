@@ -90,12 +90,12 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 
 	private static void RaiseBindHandlerMissing(SyntaxNodeAnalysisContext context, ClassDeclarationSyntax classDeclaration)
 	{
-		context.ReportDiagnostic(Diagnostic.Create(ConstructorWithBindHandlerRule, context.Node.GetLocation(), classDeclaration.Identifier.Text));
+		context.ReportDiagnostic(Diagnostic.Create(ConstructorWithBindHandlerRule, classDeclaration.Identifier.GetLocation(), classDeclaration.Identifier.Text));
 	}
 
 	private static void RaiseAttributeMissing(SyntaxNodeAnalysisContext context, ClassDeclarationSyntax classDeclaration)
 	{
-		context.ReportDiagnostic(Diagnostic.Create(GeneratorAttributeMissingRule, context.Node.GetLocation(), classDeclaration.Identifier.Text));
+		context.ReportDiagnostic(Diagnostic.Create(GeneratorAttributeMissingRule, classDeclaration.Identifier.GetLocation(), classDeclaration.Identifier.Text));
 	}
 
 	private static void ApplyDiagnostics(ClassDeclarationSyntax classDeclaration, SyntaxNodeAnalysisContext context)

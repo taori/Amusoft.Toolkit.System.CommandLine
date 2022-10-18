@@ -11,7 +11,7 @@
 
 	<ItemGroup>
 	  <!-- <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" /> -->
-	  <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Generator" Version="2.0.0-alpha.46" />
+	  <PackageReference Include="Amusoft.Toolkit.System.CommandLine.Generator" Version="2.0.0-alpha.55" />
 	  <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
 	</ItemGroup>
 
