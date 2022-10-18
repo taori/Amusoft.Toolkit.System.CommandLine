@@ -46,7 +46,11 @@
 
 
 	<ItemGroup>
-		<ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj">
+		<ProjectReference Include="..\Amusoft.Toolkit.System.CommandLine\Amusoft.Toolkit.System.CommandLine.csproj" 
+		                  OutputItemType="Analyzer"
+		                  SetTargetFramework="TargetFramework=netstandard2.0"
+		                  GeneratePathProperty="true">
+			<!-- ReferenceOutputAssembly="false" -->
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</ProjectReference>
