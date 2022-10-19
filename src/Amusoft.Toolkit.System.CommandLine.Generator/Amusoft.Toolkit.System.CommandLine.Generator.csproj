@@ -20,7 +20,7 @@
 		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.Generator.UnitTests" />
 
 		<None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-		<None Include="$(OutputPath)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<!-- <None Include="$(OutputPath)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" /> -->
 	</ItemGroup>
 
 	<ItemGroup>
