@@ -92,7 +92,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 		{
 			GenerateInternal(context, classGeneration);
 		}
-		catch (Exception e)
+		catch (Exception e) when (e is not OperationCanceledException)
 		{
 			context.ReportDiagnostic(Diagnostic.Create(
 				new DiagnosticDescriptor(
@@ -109,13 +109,17 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 
 	private void GenerateInternal(SourceProductionContext context, ClassGenerationResult? classGeneration)
 	{
+		context.CancellationToken.ThrowIfCancellationRequested();
 		if (classGeneration == null)
 			return;
 
 		var generation = classGeneration.Value;
 
 		var sb = new StringBuilder();
+		context.CancellationToken.ThrowIfCancellationRequested();
+
 		AppendGeneratedCode(sb, generation);
+		context.CancellationToken.ThrowIfCancellationRequested();
 		context.AddSource($"{generation.Class.Identifier.Text}.g.cs", sb.ToString());
 	}
 

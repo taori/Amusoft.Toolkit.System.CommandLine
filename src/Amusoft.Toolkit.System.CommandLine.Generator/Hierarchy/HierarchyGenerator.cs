@@ -30,7 +30,7 @@ internal class HierarchyGenerator : IIncrementalGenerator
 		{
 			GenerateInternal(context, input);
 		}
-		catch (Exception e)
+		catch (Exception e) when (e is not OperationCanceledException)
 		{
 			context.ReportDiagnostic(Diagnostic.Create(
 				new DiagnosticDescriptor(
@@ -47,6 +47,8 @@ internal class HierarchyGenerator : IIncrementalGenerator
 
 	private void GenerateInternal(SourceProductionContext context, (ImmutableArray<(bool root, string parent, string child)> Left, ImmutableArray<(bool root, string parent, string child)> Right) input)
 	{
+		context.CancellationToken.ThrowIfCancellationRequested();
+
 		var result = new HashSet<(bool root, string parent, string child)>(input.Left.Concat(input.Right));
 		var roots = new HashSet<string>(result.Where(static d => d.root).Select(d => d.parent));
 		var globalHierarchy = result.ToLookup(d => d.parent);
@@ -58,8 +60,13 @@ internal class HierarchyGenerator : IIncrementalGenerator
 				return (root, children);
 			}).ToDictionary(d => d.root, d => d.children);
 
+		context.CancellationToken.ThrowIfCancellationRequested();
+
 		var sb = new StringBuilder();
 		AppendSource(sb, hierarchyPerRoot);
+
+		context.CancellationToken.ThrowIfCancellationRequested();
+
 		context.AddSource("GeneratedHierarchy.g.cs", sb.ToString());
 	}
 
