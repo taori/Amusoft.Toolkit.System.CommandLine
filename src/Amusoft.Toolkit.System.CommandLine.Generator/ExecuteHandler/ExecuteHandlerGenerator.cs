@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Security;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.Extensions;
 using Amusoft.Toolkit.System.CommandLine.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
+namespace Amusoft.Toolkit.System.CommandLine.Generator.ExecuteHandler;
 
 
 [Generator(LanguageNames.CSharp)]
@@ -72,7 +66,7 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
-		var classesWithTargetGenerator = context.SyntaxProvider.ForAttributeWithMetadataName(typeof(GenerateExecuteHandlerAttribute).FullName!,
+		var classesWithTargetGenerator = context.SyntaxProvider.ForAttributeWithMetadataName("Amusoft.Toolkit.System.CommandLine.Attributes.GenerateExecuteHandlerAttribute",
 			static (c, _) => c is ClassDeclarationSyntax,
 			static (context, token) => GetClassGenerationResult(context, token));
 		

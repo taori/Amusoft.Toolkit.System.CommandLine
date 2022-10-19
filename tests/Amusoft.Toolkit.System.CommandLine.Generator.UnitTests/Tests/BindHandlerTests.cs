@@ -4,7 +4,6 @@ using System.Reflection;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
 using Amusoft.Toolkit.System.CommandLine.Generator.Analyzers;
 using Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
-using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;

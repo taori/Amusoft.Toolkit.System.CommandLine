@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
 using System.Reflection;
 using Amusoft.Toolkit.System.CommandLine.Attributes;
-using Amusoft.Toolkit.System.CommandLine.Generators.ExecuteHandler;
+using Amusoft.Toolkit.System.CommandLine.Generator.ExecuteHandler;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using NLog.Fluent;

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Amusoft.Toolkit.System.CommandLine.Attributes;
 using Amusoft.Toolkit.System.CommandLine.Generator.Utility;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Amusoft.Toolkit.System.CommandLine.Generator.Analyzers;
 
@@ -28,7 +28,7 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 		"Generator attribute missing", 
 		"No generator attribute is specified for {0}",
 		"Amusoft.Toolkit.System.CommandLine.Generator Usage", DiagnosticSeverity.Warning, isEnabledByDefault: true,
-		description: $"Neither {typeof(GenerateExecuteHandlerAttribute).Name} nor {typeof(GenerateCommandHandlerAttribute).Name} is specified.");
+		description: $"Neither GenerateExecuteHandlerAttribute nor GenerateCommandHandlerAttribute is specified.");
 
 	internal static readonly DiagnosticDescriptor RootCommandMustBeInheritedRule = new DiagnosticDescriptor(
 		"ATSCG003",
@@ -105,8 +105,10 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 
 		if (!TryGeneratorAttribute(classDeclaration, out var attributeSyntax))
 		{
-			if (!SyntaxIsRootCommand(classDeclaration))
-				RaiseAttributeMissing(context, classDeclaration);
+			if (!IsCandidateForAttributeDiagnostic(context, classDeclaration))
+				return;
+
+			RaiseAttributeMissing(context, classDeclaration);
 			return;
 		}
 
@@ -115,6 +117,25 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 			RaiseBindHandlerMissing(context, classDeclaration);
 			return;
 		}
+	}
+
+	private static bool IsCandidateForAttributeDiagnostic(SyntaxNodeAnalysisContext context, ClassDeclarationSyntax classDeclaration)
+	{
+		if (SyntaxIsRootCommand(classDeclaration))
+			return false;
+
+		TryGetClassAttributeIdentifiers(classDeclaration, out var classAttributes);
+		if (classAttributes.HasValue && classAttributes.Value.Any(identifier => identifier is
+		    {
+			    Identifier.Text:
+			    "HasParentCommand"
+			    or "HasParentCommandAttribute"
+			    or "HasChildCommand"
+			    or "HasChildCommandAttribute"
+		    }))
+			return false;
+
+		return true;
 	}
 
 	private static bool SyntaxIsRootCommand(ClassDeclarationSyntax classDeclaration)
@@ -145,6 +166,21 @@ public class CommandCallsBindHandlerAnalyzer : DiagnosticAnalyzer
 		}
 
 		constructorsSyntax = default;
+		return false;
+	}
+
+	private static bool TryGetClassAttributeIdentifiers(ClassDeclarationSyntax classDeclaration, out ImmutableArray<IdentifierNameSyntax>? attributeIdentifiers)
+	{
+		if (classDeclaration is {AttributeLists: { } attributes} && attributes is {Count: > 0})
+		{
+			attributeIdentifiers = attributes.SelectMany(attributeList => attributeList.Attributes.Select(attribute => attribute.Name))
+				.OfType<IdentifierNameSyntax>()
+				.ToImmutableArray();
+
+			return attributeIdentifiers.Value.Length > 0;
+		}
+
+		attributeIdentifiers = default;
 		return false;
 	}
 

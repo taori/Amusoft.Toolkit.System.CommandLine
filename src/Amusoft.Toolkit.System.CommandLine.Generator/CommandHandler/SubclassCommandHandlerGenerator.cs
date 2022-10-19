@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Amusoft.Toolkit.System.CommandLine.Attributes;
 using Amusoft.Toolkit.System.CommandLine.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -245,7 +244,7 @@ internal class SubclassCommandHandlerGenerator : ISourceGenerator
             return false;
 
         var parentSymbol = semanticModel.GetDeclaredSymbol(parentClass);
-        var handlerAttributeTypeSymbol = semanticModel.Compilation.GetTypeByMetadataName(typeof(GenerateCommandHandlerAttribute).FullName!);
+        var handlerAttributeTypeSymbol = semanticModel.Compilation.GetTypeByMetadataName("Amusoft.Toolkit.System.CommandLine.Attributes.GenerateCommandHandlerAttribute");
         var commandSymbol = semanticModel.Compilation.GetTypeByMetadataName("System.CommandLine.Command");
 
         var inheritsCommand = parentClass.BaseList.Types.Any(baseType =>
