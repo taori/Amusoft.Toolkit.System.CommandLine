@@ -26,6 +26,27 @@ internal class HierarchyGenerator : IIncrementalGenerator
 
 	private void GenerateHierarchy(SourceProductionContext context, (ImmutableArray<(bool root, string parent, string child)> Left, ImmutableArray<(bool root, string parent, string child)> Right) input)
 	{
+		try
+		{
+			GenerateInternal(context, input);
+		}
+		catch (Exception e)
+		{
+			context.ReportDiagnostic(Diagnostic.Create(
+				new DiagnosticDescriptor(
+					"ATSCG0000",
+					"An exception was thrown by the Hierarchy generator",
+					"An exception was thrown by the Hierarchy generator: '{0}'",
+					"Hierarchy",
+					DiagnosticSeverity.Error,
+					isEnabledByDefault: true),
+				Location.None,
+				e.ToString()));
+		}
+	}
+
+	private void GenerateInternal(SourceProductionContext context, (ImmutableArray<(bool root, string parent, string child)> Left, ImmutableArray<(bool root, string parent, string child)> Right) input)
+	{
 		var result = new HashSet<(bool root, string parent, string child)>(input.Left.Concat(input.Right));
 		var roots = new HashSet<string>(result.Where(static d => d.root).Select(d => d.parent));
 		var globalHierarchy = result.ToLookup(d => d.parent);
@@ -36,7 +57,7 @@ internal class HierarchyGenerator : IIncrementalGenerator
 				AddChildrenRecursive(root, globalHierarchy, children);
 				return (root, children);
 			}).ToDictionary(d => d.root, d => d.children);
-		
+
 		var sb = new StringBuilder();
 		AppendSource(sb, hierarchyPerRoot);
 		context.AddSource("GeneratedHierarchy.g.cs", sb.ToString());

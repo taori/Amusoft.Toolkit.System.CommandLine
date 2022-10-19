@@ -88,6 +88,27 @@ internal class ExecuteHandlerGenerator : IIncrementalGenerator
 
 	private void GenerateSources(SourceProductionContext context, ClassGenerationResult? classGeneration)
 	{
+		try
+		{
+			GenerateInternal(context, classGeneration);
+		}
+		catch (Exception e)
+		{
+			context.ReportDiagnostic(Diagnostic.Create(
+				new DiagnosticDescriptor(
+					"ATSCG0000",
+					"An exception was thrown by the ExecuteHandler generator",
+					"An exception was thrown by the ExecuteHandler generator: '{0}'",
+					"ExecuteHandler",
+					DiagnosticSeverity.Error,
+					isEnabledByDefault: true),
+				Location.None,
+				e.ToString()));
+		}
+	}
+
+	private void GenerateInternal(SourceProductionContext context, ClassGenerationResult? classGeneration)
+	{
 		if (classGeneration == null)
 			return;
 
