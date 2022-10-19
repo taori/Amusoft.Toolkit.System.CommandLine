@@ -182,4 +182,36 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 
 		await RunTestAsync(input);
 	}
+
+	[Fact]
+	async Task CommandWithDelegationNoDiagnostic()
+	{
+		var input = """
+		using System.CommandLine;
+		using Amusoft.Toolkit.System.CommandLine.Attributes;
+		
+		namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Tests;		
+		
+		[HasChildCommand(typeof(TestCommand2))]
+		public class TestCommand : Command
+		{
+			public TestCommand() : base("")
+			{
+			}
+		}	
+		
+		[HasParentCommand(typeof(TestCommand))]
+		public class TestCommand2 : Command
+		{
+			public TestCommand2() : base("")
+			{
+			}
+		}	
+		""";
+
+		await RunTestAsync(input, config =>
+		{
+			config.DisabledDiagnostics.Add("ATSCG003");
+		});
+	}
 }
