@@ -23,6 +23,7 @@
 	<ItemGroup>
 		<PackageReference Include="Amusoft.XUnit.NLog.Extensions" Version="2.4.2-alpha61" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" Version="1.1.1" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing.XUnit" Version="1.1.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 		<PackageReference Include="xunit" Version="2.4.2" />
 		<PackageReference Include="NLog" Version="4.7.11" />
@@ -48,6 +49,7 @@
 
 	<ItemGroup>
 		<Folder Include="Snapshots\" />
+		<Folder Include="Tests\Fix\" />
 	</ItemGroup>
 
 	<ItemGroup>

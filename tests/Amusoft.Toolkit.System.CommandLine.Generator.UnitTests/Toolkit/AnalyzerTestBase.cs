@@ -20,13 +20,7 @@ public class AnalyzerTestBase<TAnalyzer> : GeneratorTestBase
 	protected static void ConfigureDefaultTest<TLocalAnalyzer>(CSharpAnalyzerTest<TLocalAnalyzer, XUnitVerifier> configuration)
 		where TLocalAnalyzer : DiagnosticAnalyzer, new()
 	{
-		configuration.ReferenceAssemblies = ReferenceAssemblies.Net.Net50;
-		configuration.TestState.AdditionalReferences.AddRange(
-			new[]
-			{
-				MetadataReference.CreateFromFile(typeof(GenerateExecuteHandlerAttribute).GetTypeInfo().Assembly.Location),
-				MetadataReference.CreateFromFile(typeof(Command).GetTypeInfo().Assembly.Location)
-			});
+		TestReferenceUtility.ApplyReferences(configuration);
 	}
 
 	protected static DiagnosticResult Diagnostic(string? diagnosticId, bool fullId = false)
