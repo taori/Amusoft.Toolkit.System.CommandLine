@@ -11,9 +11,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Formatting;
-using NotImplementedException = System.NotImplementedException;
 
-namespace Amusoft.Toolkit.System.CommandLine.Generator.Codefixes;
+namespace Amusoft.Toolkit.System.CommandLine.CodeFixes;
 
 #pragma warning disable CS1591
 

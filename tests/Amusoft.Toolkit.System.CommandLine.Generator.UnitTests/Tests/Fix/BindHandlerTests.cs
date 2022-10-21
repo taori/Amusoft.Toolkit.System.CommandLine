@@ -1,5 +1,5 @@
-﻿using Amusoft.Toolkit.System.CommandLine.Generator.Analyzers;
-using Amusoft.Toolkit.System.CommandLine.Generator.Codefixes;
+﻿using Amusoft.Toolkit.System.CommandLine.CodeFixes;
+using Amusoft.Toolkit.System.CommandLine.Generator.Analyzers;
 using Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit.Abstractions;
