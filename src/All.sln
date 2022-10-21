@@ -32,6 +32,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Logging.CliTest", "..\tests\Amusoft.Toolkit.System.CommandLine.Logging.CliTest\Amusoft.Toolkit.System.CommandLine.Logging.CliTest.csproj", "{79C82FB0-F4C6-4452-BA8C-08BAB2F7A833}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Generator", "Amusoft.Toolkit.System.CommandLine.Generator\Amusoft.Toolkit.System.CommandLine.Generator.csproj", "{0DA804C9-393F-41A1-84D9-93B2B8061A0F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B624D0A8-D81F-4078-BBA5-1C667F4D16D0} = {B624D0A8-D81F-4078-BBA5-1C667F4D16D0}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amusoft.Toolkit.System.CommandLine.Generator.UnitTests", "..\tests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests\Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.csproj", "{00996A2D-A540-4E0C-AA53-F9A9AC3C0387}"
 EndProject
