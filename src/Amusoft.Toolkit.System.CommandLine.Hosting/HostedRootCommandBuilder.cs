@@ -9,6 +9,7 @@ using Amusoft.Toolkit.System.CommandLine.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Amusoft.Toolkit.System.CommandLine.Hosting;
 

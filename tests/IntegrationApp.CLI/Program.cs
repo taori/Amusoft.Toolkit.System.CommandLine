@@ -1,14 +1,14 @@
-# Features 
+﻿using Microsoft.Extensions.Logging;
+using System.CommandLine;
+using System.CommandLine.Parsing;
+using Amusoft.Toolkit.System.CommandLine.Attributes;
+using Amusoft.Toolkit.System.CommandLine.Hosting;
+using Amusoft.Toolkit.System.CommandLine.Logging.Extensions;
+using Amusoft.Toolkit.System.CommandLine.Logging.Parameters;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-## Full sample
-
-This sample uses 
-- Amusoft.Toolkit.System.CommandLine
-- Amusoft.Toolkit.System.CommandLine.Hosting
-- Amusoft.Toolkit.System.CommandLine.Logging
-- Amusoft.Toolkit.System.CommandLine.Generator
-
-```cs
+namespace IntegrationApp.CLI;
 
 internal class Program
 {
@@ -47,7 +47,13 @@ internal class Program
 			.ConfigureServices((configuration, collection) =>
 			{
 				collection
-					.AddCommandHierarchy(GeneratedHierarchy.ApplicationRootCommand)
+					.AddCommandHierarchy(builder =>
+					{
+						builder
+							.AddMapping(typeof(ApplicationRootCommand), typeof(TestCommand))
+							.AddMapping(typeof(ApplicationRootCommand), typeof(Test2Command))
+							;
+					})
 					.AddRuntimeLogLevel(options =>
 					{
 						options.Namespace = configuration.GetValue<string>("Logging:RunTimeLogLevel:Namespace");
@@ -56,7 +62,7 @@ internal class Program
 					})
 					.AddLogging(logging =>
 					{
-						configure.AddConfiguration(configuration.GetSection("Logging"))
+						logging.AddConfiguration(configuration.GetSection("Logging"))
 							.AddNoNamespaceConsoleFormatter()
 							.AddConsole();
 					});
@@ -71,11 +77,6 @@ internal class Program
 	}
 }
 
-public static class GlobalParameters
-{
-	public static LogLevelOption Logging { get; set; }
-}
-
 public class ApplicationRootCommand : RootCommand
 {
 	public ApplicationRootCommand()
@@ -84,25 +85,43 @@ public class ApplicationRootCommand : RootCommand
 	}
 }
 
-[GenerateExecuteHandler]
-public partial class TestCommand : Command
+public static class GlobalParameters
+{
+	public static readonly LogLevelOption Logging = new(LogLevel.Information);
+}
+
+public class TestCommand : Command
 {
 	private readonly ILogger<TestCommand> _logger;
 
 	public TestCommand(ILogger<TestCommand> logger) : base("test", "testcommand")
 	{
 		_logger = logger;
+
+		this.SetHandler(context =>
+		{
+			_logger.LogDebug("Debug from test");
+			_logger.LogInformation("Information from test");
+			_logger.LogWarning("Warning from test");
+			_logger.LogError("Error from test");
+		});
 	}
 }
 
-[GenerateExecuteHandler]
-public partial class Test2Command : Command
+public class Test2Command : Command
 {
 	private readonly ILogger<Test2Command> _logger;
 
 	public Test2Command(ILogger<Test2Command> logger) : base("test2", "testcommand")
 	{
 		_logger = logger;
+
+		this.SetHandler(context =>
+		{
+			_logger.LogDebug("Debug from test2");
+			_logger.LogInformation("Information from test2");
+			_logger.LogWarning("Warning from test2");
+			_logger.LogError("Error from test2");
+		});
 	}
 }
-```

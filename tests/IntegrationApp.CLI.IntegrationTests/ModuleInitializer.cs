@@ -1,0 +1,18 @@
+﻿using System.IO;
+using System.Runtime.CompilerServices;
+using VerifyTests;
+
+namespace Amusoft.Toolkit.System.CommandLine.UnitTests.Toolkit;
+
+internal class ModuleInitializer
+{
+	[ModuleInitializer]
+	public static void Initialize()
+	{
+		Verifier.DerivePathInfo(
+			(sourceFile, projectDirectory, type, method) => new(
+				directory: Path.Combine(projectDirectory, "Snapshots"),
+				typeName: type.Name,
+				methodName: method.Name));
+	}
+}

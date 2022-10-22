@@ -86,7 +86,7 @@
 		</ItemGroup>
 	</Target>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(IntegrationTest)' == ''">
 		<Copy SourceFiles="$(SolutionDir)Amusoft.Toolkit.System.CommandLine.CodeFixes\bin\$(Configuration)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.CodeFixes.dll"
 		      DestinationFiles="$(OutputPath)Amusoft.Toolkit.System.CommandLine.CodeFixes.dll"></Copy>
 		<Message Text="Copy from $(SolutionDir)Amusoft.Toolkit.System.CommandLine.CodeFixes\bin\$(Configuration)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.CodeFixes.dll to $(OutputPath)Amusoft.Toolkit.System.CommandLine.CodeFixes.dll done." Importance="High"/>
