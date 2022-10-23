@@ -14,7 +14,7 @@ internal class Program
 {
 	static async Task<int> Main(string[] args)
 	{
-		return await HostedRootCommandBuilder.ForCommand<ApplicationRootCommand>()
+		return await HostedRootCommandBuilder.Create()
 			.UseDefaultConfiguration()
 			.UseDefaultCommandLineBuilder()
 			.ConfigureServices((configuration, collection) =>

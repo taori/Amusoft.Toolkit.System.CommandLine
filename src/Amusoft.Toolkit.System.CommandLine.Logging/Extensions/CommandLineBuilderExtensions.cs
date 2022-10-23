@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CommandLine.Binding;
 using System.CommandLine.Builder;
+using System.CommandLine.Invocation;
 using Amusoft.Toolkit.System.CommandLine.Extensions;
 using Amusoft.Toolkit.System.CommandLine.Logging.Options;
 using Microsoft.Extensions.Logging;
@@ -30,14 +31,18 @@ public static class CommandLineBuilderExtensions
 				var logLevel = optionResult.GetValueOrDefault<LogLevel>();
 				var logFilterOptions = context.BindingContext.GetRequiredServiceWithFallback<IOptionsMonitor<LoggerFilterOptions>>(serviceProvider);
 			
-				if (runtimeOptions.Value.Namespace is { })
+				if (runtimeOptions.Value.Namespace is { } ns)
 				{
-					logFilterOptions.CurrentValue.AddFilter(runtimeOptions.Value.Namespace, level => level >= logLevel);
+					logFilterOptions.CurrentValue.MinLevel = logLevel;
+					logFilterOptions.CurrentValue.AddFilter(ns, LevelFilter);
 				}
 				else
 				{
-					logFilterOptions.CurrentValue.AddFilter(level => level >= logLevel);
+					logFilterOptions.CurrentValue.MinLevel = logLevel;
+					logFilterOptions.CurrentValue.AddFilter(LevelFilter);
 				}
+
+				bool LevelFilter(LogLevel level) => level >= logLevel;
 			}
 
 			await next(context);

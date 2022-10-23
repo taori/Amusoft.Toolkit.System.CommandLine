@@ -20,7 +20,7 @@
 		<InternalsVisibleTo Include="Amusoft.Toolkit.System.CommandLine.Generator.UnitTests" />
 
 		<None Include="$(OutputPath)\netstandard2.0\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-		<!-- <None Include="$(OutputPath)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" /> -->
+		<None Include="$(OutputPath)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.CodeFixes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,6 +61,7 @@
 	  <Folder Include="Extensions\" />
 	  <Folder Include="Hierarchy\" />
 	  <Folder Include="Analyzers\" />
+	  <Folder Include="Codefixes\" />
 	</ItemGroup>
 
 	<!-- <ItemGroup> -->
@@ -83,5 +84,13 @@
 		<ItemGroup>
 			<TargetPathWithTargetPlatformMoniker Include="@(ResolvedCompileFileDefinitions)" IncludeRuntimeDependency="false" />
 		</ItemGroup>
+	</Target>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(IntegrationTest)' == ''">
+		<Copy SourceFiles="$(SolutionDir)Amusoft.Toolkit.System.CommandLine.CodeFixes\bin\$(Configuration)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.CodeFixes.dll"
+		      DestinationFiles="$(OutputPath)Amusoft.Toolkit.System.CommandLine.CodeFixes.dll"></Copy>
+		<Message Text="Copy from $(SolutionDir)Amusoft.Toolkit.System.CommandLine.CodeFixes\bin\$(Configuration)\netstandard2.0\Amusoft.Toolkit.System.CommandLine.CodeFixes.dll to $(OutputPath)Amusoft.Toolkit.System.CommandLine.CodeFixes.dll done." Importance="High"/>
+		<!-- <Message Text="SolutionDir: $(SolutionDir)" Importance="High"/> -->
+		<Exec Command="echo SolutionDir: $(SolutionDir)&#xD;&#xA;echo Configuration: $(Configuration)&#xD;&#xA;echo DevEnvDir: $(DevEnvDir)&#xD;&#xA;echo OutDir: $(OutDir)&#xD;&#xA;echo ProjectDir: $(ProjectDir)&#xD;&#xA;echo VisualStudioVersion: $(VisualStudioVersion)&#xD;&#xA;echo AssemblySearchPaths: $(AssemblySearchPaths)&#xD;&#xA;echo AssemblyName: $(AssemblyName)&#xD;&#xA;echo BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)&#xD;&#xA;echo CscToolPath: $(CscToolPath)" />
 	</Target>
 </Project>

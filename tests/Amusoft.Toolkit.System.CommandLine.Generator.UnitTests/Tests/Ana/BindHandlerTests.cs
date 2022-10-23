@@ -11,20 +11,20 @@ using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 using Xunit.Abstractions;
 using BindHandlerAnalyzerVerifier = Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Toolkit.ExtendedAnalyzerVerifier
-	<Amusoft.Toolkit.System.CommandLine.Generator.Analyzers.CommandCallsBindHandlerAnalyzer>;
+    <Amusoft.Toolkit.System.CommandLine.Generator.Analyzers.CommandCallsBindHandlerAnalyzer>;
 
-namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Tests;
+namespace Amusoft.Toolkit.System.CommandLine.Generator.UnitTests.Tests.Ana;
 
 public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer>
 {
-	public BindHandlerTests(ITestOutputHelper outputHelper, GlobalSetupFixture data) : base(outputHelper, data)
-	{
-	}
-	
-	[Fact]
-	async Task NoDiagnosticEverythingOkay()
-	{
-		var input = """
+    public BindHandlerTests(ITestOutputHelper outputHelper, GlobalSetupFixture data) : base(outputHelper, data)
+    {
+    }
+
+    [Fact]
+    async Task NoDiagnosticEverythingOkay()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 		
@@ -42,16 +42,16 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 
-		await RunTestAsync(input, test =>
-		{
-			test.DisabledDiagnostics.Add("ATSCG003");
-		});
-	}
+        await RunTestAsync(input, test =>
+        {
+            test.DisabledDiagnostics.Add("ATSCG003");
+        });
+    }
 
-	[Fact]
-	async Task BindCallMissing()
-	{
-		var input = """
+    [Fact]
+    async Task BindCallMissing()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 
@@ -67,18 +67,18 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 			private void BindHandler() { }
 		}
 		""";
-		
-		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("001").WithSpan(7, 22, 7, 33).WithArguments("TestCommand");
-		await RunTestAsync(input, test =>
-		{
-			test.DisabledDiagnostics.Add("ATSCG003");
-		}, diagnostic);
-	}
 
-	[Fact]
-	async Task AttributeMissingWithDiagnostic()
-	{
-		var input = """
+        var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("001").WithSpan(7, 22, 7, 33).WithArguments("TestCommand");
+        await RunTestAsync(input, test =>
+        {
+            test.DisabledDiagnostics.Add("ATSCG003");
+        }, diagnostic);
+    }
+
+    [Fact]
+    async Task AttributeMissingWithDiagnostic()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 
@@ -93,18 +93,18 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 			private void BindHandler() { }
 		}
 		""";
-		
-		var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("002").WithSpan(6, 22, 6, 33).WithArguments("TestCommand");
-		await RunTestAsync(input, test =>
-		{
-			test.DisabledDiagnostics.Add("ATSCG003");
-		}, diagnostic);
-	}
 
-	[Fact]
-	async Task AttributeMissingWithoutDiagnostic()
-	{
-		var input = """
+        var diagnostic = BindHandlerAnalyzerVerifier.Diagnostic("002").WithSpan(6, 22, 6, 33).WithArguments("TestCommand");
+        await RunTestAsync(input, test =>
+        {
+            test.DisabledDiagnostics.Add("ATSCG003");
+        }, diagnostic);
+    }
+
+    [Fact]
+    async Task AttributeMissingWithoutDiagnostic()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 
@@ -120,16 +120,16 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 
-		await RunTestAsync(input, test =>
-		{
-			test.DisabledDiagnostics.Add("ATSCG003");
-		});
-	}
+        await RunTestAsync(input, test =>
+        {
+            test.DisabledDiagnostics.Add("ATSCG003");
+        });
+    }
 
-	[Fact]
-	async Task NoRootCommandWithDiagnostic()
-	{
-		var input = """
+    [Fact]
+    async Task NoRootCommandWithDiagnostic()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 		
@@ -147,14 +147,14 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 
-		var diagnostic = new DiagnosticResult(CommandCallsBindHandlerAnalyzer.RootCommandMustBeInheritedRule);
-		await RunTestAsync(input, diagnostic);
-	}
+        var diagnostic = new DiagnosticResult(CommandCallsBindHandlerAnalyzer.RootCommandMustBeInheritedRule);
+        await RunTestAsync(input, diagnostic);
+    }
 
-	[Fact]
-	async Task NoRootCommandWithoutDiagnostic()
-	{
-		var input = """
+    [Fact]
+    async Task NoRootCommandWithoutDiagnostic()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 		
@@ -180,13 +180,13 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}
 		""";
 
-		await RunTestAsync(input);
-	}
+        await RunTestAsync(input);
+    }
 
-	[Fact]
-	async Task CommandWithDelegationNoDiagnostic()
-	{
-		var input = """
+    [Fact]
+    async Task CommandWithDelegationNoDiagnostic()
+    {
+        var input = """
 		using System.CommandLine;
 		using Amusoft.Toolkit.System.CommandLine.Attributes;
 		
@@ -209,9 +209,9 @@ public class BindHandlerTests : AnalyzerTestBase<CommandCallsBindHandlerAnalyzer
 		}	
 		""";
 
-		await RunTestAsync(input, config =>
-		{
-			config.DisabledDiagnostics.Add("ATSCG003");
-		});
-	}
+        await RunTestAsync(input, config =>
+        {
+            config.DisabledDiagnostics.Add("ATSCG003");
+        });
+    }
 }

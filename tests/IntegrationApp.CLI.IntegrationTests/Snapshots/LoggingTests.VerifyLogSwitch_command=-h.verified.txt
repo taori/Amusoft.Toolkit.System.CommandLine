@@ -1,0 +1,19 @@
+﻿{
+  Output:
+Description:
+
+Usage:
+  IntegrationApp.CLI [command] [options]
+
+Options:
+  --logLevel <Critical|Debug|Error|Information|None|Trace|Warning>  log level for custom application code [default: Information]
+  --version                                                         Show version information
+  -?, -h, --help                                                    Show help and usage information
+
+Commands:
+  test   testcommand
+  test2  testcommand
+
+,
+  Error: 
+}

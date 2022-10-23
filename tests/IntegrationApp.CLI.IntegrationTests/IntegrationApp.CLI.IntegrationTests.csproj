@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CliWrap" Version="3.5.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+		<PackageReference Include="Verify.Xunit" Version="18.0.0-beta.32" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" Version="3.1.2">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Toolkit\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Amusoft.Toolkit.System.CommandLine.Hosting\Amusoft.Toolkit.System.CommandLine.Hosting.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<IntegrationTest>true</IntegrationTest>
+	</PropertyGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+
+		<Message Text="Building dependent project" Importance="High" />
+		<Exec Command="dotnet build $(SolutionDir)..\tests\IntegrationApp.CLI\IntegrationApp.CLI.csproj -c Release" ContinueOnError="False" />
+
+		<Message Text="Packing dependent project" Importance="High" />
+		<Exec Command="dotnet pack $(SolutionDir)..\tests\IntegrationApp.CLI\IntegrationApp.CLI.csproj -c Release -o $(ProjectDir)integrationApp --no-build" ContinueOnError="False" />
+	</Target>
+
+</Project>
