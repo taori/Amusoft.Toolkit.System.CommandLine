@@ -10,7 +10,6 @@ public interface IRootCommandProvider
 	/// <summary>
 	/// Obtains instance of constructed command
 	/// </summary>
-	/// <typeparam name="TCommand"></typeparam>
 	/// <returns></returns>
 	RootCommand? GetCommand();
 }
