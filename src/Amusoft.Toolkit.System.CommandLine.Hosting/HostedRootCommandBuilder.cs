@@ -156,7 +156,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 		var context = new ConsoleApplicationCreationContext(_configuration, _serviceCollection.BuildServiceProvider());
 
 		var rootCommandProvider = context.ServiceProvider.GetRequiredService<IRootCommandProvider>();
-		var rootCommand = rootCommandProvider.GetCommand<TRootCommand>();
+		var rootCommand = rootCommandProvider.GetCommand();
 		var commandLineBuilder = new CommandLineBuilder(rootCommand);
 		
 		_defaultCommandLineBuilder?.Invoke(context, commandLineBuilder);

@@ -12,5 +12,5 @@ public interface IRootCommandProvider
 	/// </summary>
 	/// <typeparam name="TCommand"></typeparam>
 	/// <returns></returns>
-	TCommand GetCommand<TCommand>() where TCommand : RootCommand;
+	RootCommand? GetCommand();
 }

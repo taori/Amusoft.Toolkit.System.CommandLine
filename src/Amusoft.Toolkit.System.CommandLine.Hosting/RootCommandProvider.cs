@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CommandLine;
+using System.Linq;
 using Amusoft.Toolkit.System.CommandLine.CommandModel;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,20 +18,31 @@ internal class RootCommandProvider : IRootCommandProvider
 	}
 
 	private bool _commandTreeBuilt;
+	private Type? _rootCommandType;
 
-	public TCommand GetCommand<TCommand>() where TCommand : RootCommand
+	public RootCommand? GetCommand()
 	{
-		if (_commandTreeBuilt)
-			return _serviceProvider.GetRequiredService<TCommand>();
+		if (_commandTreeBuilt && _rootCommandType is not null)
+			return _serviceProvider.GetRequiredService(_rootCommandType) as RootCommand;
 
-		var rootCommand = _serviceProvider.GetRequiredService<TCommand>();
+		var rootCommandType = FindRootCommandType(_commandHierarchy);
+		if (rootCommandType is null)
+			throw new Exception("There is no command of type RootCommand in the command hierarchy");
+
+		var rootCommand = _serviceProvider.GetRequiredService(rootCommandType) as RootCommand;
 		if (rootCommand is null)
-			throw new Exception($"The type {typeof(TCommand).FullName} was not registered");
+			throw new Exception($"The type {rootCommandType.FullName} was not registered");
 
 		AppendChildCommands(rootCommand);
 
+		_rootCommandType = rootCommandType;
 		_commandTreeBuilt = true;
 		return rootCommand;
+	}
+
+	private Type? FindRootCommandType(ICommandHierarchy commandHierarchy)
+	{
+		return commandHierarchy.Hierarchy.Keys.FirstOrDefault(d => typeof(RootCommand).IsAssignableFrom(d));
 	}
 
 	private void AppendChildCommands(Command command)
