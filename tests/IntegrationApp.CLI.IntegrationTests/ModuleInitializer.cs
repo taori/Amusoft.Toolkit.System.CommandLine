@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Runtime.CompilerServices;
-using VerifyTests;
+﻿using System.Runtime.CompilerServices;
 
-namespace Amusoft.Toolkit.System.CommandLine.UnitTests.Toolkit;
+namespace IntegrationApp.CLI.IntegrationTests;
 
 internal class ModuleInitializer
 {

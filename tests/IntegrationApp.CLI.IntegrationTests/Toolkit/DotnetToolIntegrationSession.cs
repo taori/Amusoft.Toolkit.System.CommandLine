@@ -4,7 +4,7 @@ using CliWrap.Buffered;
 
 namespace IntegrationApp.CLI.IntegrationTests.Toolkit;
 
-public class DotnetToolIntegrationSession : IAsyncDisposable
+public class DotnetToolIntegrationSession : IAsyncDisposable, IDisposable
 {
 	private readonly string _packageFolder;
 	private readonly string _toolName;
@@ -56,5 +56,10 @@ public class DotnetToolIntegrationSession : IAsyncDisposable
 	public async Task ExecuteAsync(string command)
 	{
 		await RunAppendAsync(_toolName, command);
+	}
+
+	public void Dispose()
+	{
+		UninstallAsync().GetAwaiter().GetResult();
 	}
 }

@@ -1,1 +1,8 @@
-﻿
+﻿{
+  Output:
+info:  Information from test
+warn:  Warning from test
+fail:  Error from test
+,
+  Error: 
+}

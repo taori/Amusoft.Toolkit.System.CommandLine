@@ -2,6 +2,7 @@ using System.Reflection;
 
 namespace IntegrationApp.CLI.IntegrationTests.Toolkit;
 
+[Collection(nameof(NoParallelDefinition))]
 public class ToolTestBase
 {
 	protected static Task<DotnetToolIntegrationSession> GetTestSession()
