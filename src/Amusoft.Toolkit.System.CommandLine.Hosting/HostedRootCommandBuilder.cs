@@ -13,29 +13,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Amusoft.Toolkit.System.CommandLine.Hosting;
 
-
 /// <summary>
 /// Helper class to configure an underlying <see cref="CommandLineBuilder"/>
 /// </summary>
 public class HostedRootCommandBuilder
 {
-	/// <summary>
-	/// Creates application builder a given root command
-	/// </summary>
-	/// <typeparam name="TRootCommand">implementation of root command</typeparam>
-	/// <returns></returns>
-	public static HostedRootCommandBuilder<TRootCommand> ForCommand<TRootCommand>() where TRootCommand : RootCommand => new();
-}
-
-/// <summary>
-/// Helper class to configure an underlying <see cref="CommandLineBuilder"/>
-/// </summary>
-public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCommand
-{
 	private IServiceCollection _serviceCollection = new ServiceCollection();
 	private IConfiguration? _configuration;
 	private Action<IConfiguration, IServiceCollection>? _configureServicesCallback;
 	private Action<ConsoleApplicationCreationContext, CommandLineBuilder>? _defaultCommandLineBuilder;
+
+	/// <summary>
+	/// Constructor method
+	/// </summary>
+	/// <returns></returns>
+	public static HostedRootCommandBuilder Create() => new();
 
 	internal HostedRootCommandBuilder()
 	{
@@ -46,7 +38,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 	/// </summary>
 	/// <param name="configuration"></param>
 	/// <returns></returns>
-	public HostedRootCommandBuilder<TRootCommand> UseConfiguration(IConfiguration configuration)
+	public HostedRootCommandBuilder UseConfiguration(IConfiguration configuration)
 	{
 		_configuration = configuration;
 		return this;
@@ -57,7 +49,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 	/// </summary>
 	/// <param name="configure"></param>
 	/// <returns></returns>
-	public HostedRootCommandBuilder<TRootCommand> UseConfiguration(Action<ConfigurationBuilder> configure)
+	public HostedRootCommandBuilder UseConfiguration(Action<ConfigurationBuilder> configure)
 	{
 		var builder = new ConfigurationBuilder();
 		configure?.Invoke(builder);
@@ -70,7 +62,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 	/// </summary>
 	/// <param name="environment"></param>
 	/// <returns></returns>
-	public HostedRootCommandBuilder<TRootCommand> UseDefaultConfiguration(string? environment = default)
+	public HostedRootCommandBuilder UseDefaultConfiguration(string? environment = default)
 	{
 		environment ??= "Production";
 
@@ -90,7 +82,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 	/// </summary>
 	/// <param name="configuration"></param>
 	/// <returns></returns>
-	public HostedRootCommandBuilder<TRootCommand> ConfigureServices(Action<IConfiguration, IServiceCollection> configuration)
+	public HostedRootCommandBuilder ConfigureServices(Action<IConfiguration, IServiceCollection> configuration)
 	{
 		if (configuration == null)
 			return this;
@@ -118,7 +110,7 @@ public class HostedRootCommandBuilder<TRootCommand> where TRootCommand : RootCom
 	///		</code>
 	/// </example>
 	/// <returns></returns>
-	public HostedRootCommandBuilder<TRootCommand> UseDefaultCommandLineBuilder()
+	public HostedRootCommandBuilder UseDefaultCommandLineBuilder()
 	{
 		_defaultCommandLineBuilder = (context, builder) =>
 		{

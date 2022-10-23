@@ -37,7 +37,7 @@ internal class Program
 
 	private static async Task<int> RunApplicationAsync(string[] args)
 	{
-		return await HostedRootCommandBuilder.ForCommand<ApplicationRootCommand>()
+		return await HostedRootCommandBuilder.Create()
 #if DEBUG
 			.UseDefaultConfiguration("Development")
 #else
